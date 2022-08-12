@@ -35,5 +35,5 @@ fi
 [ -f ~/.xprofile ] && . ~/.xprofile
 
 # start i3wm
-slstatus &
+dwmblocks &
 exec dwm
