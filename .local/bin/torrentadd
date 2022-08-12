@@ -1,0 +1,6 @@
+#!/bin/sh
+# Mimeapp script for adding torrent to qbittorent-nox, but will also start the daemon first if not running.
+
+pidof qbittorrent-nox >/dev/null || (qbittorrent-nox -d && notify-send "Starting transmission daemon...")
+
+qbittorrent-nox "$@" && notify-send "🔽 Torrent added."
