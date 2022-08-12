@@ -1,4 +1,10 @@
-Xft.dpi:       192
-Xcursor.theme: macOSBigSur
-cursor.size:   48
-st.font:       Monospace-11;
+! font settings
+Xft.dpi:        192
+Xft.antialias:  true
+Xft.hinting:    true
+Xft.rgba:       rgb
+Xft.hintstyle:  hintslight
+
+Xcursor.theme:  macOSBigSur
+cursor.size:    48
+st.font:        Monospace-11;
