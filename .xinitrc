@@ -34,6 +34,6 @@ fi
 # load autostart programs
 [ -f ~/.xprofile ] && . ~/.xprofile
 
-# start i3wm
-dwmblocks &
+# start dwm
+slstatus &
 exec dwm
