@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=MPV image viewer
+Exec=mvi %U

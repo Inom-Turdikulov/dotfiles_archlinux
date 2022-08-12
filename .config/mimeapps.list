@@ -1,0 +1,18 @@
+[Default Applications]
+
+# xdg-open will use these settings to determine how to open filetypes.
+# These .desktop entries can also be seen and changed in ~/.local/share/applications/
+
+text/x-shellscript=emacs.desktop;
+x-scheme-handler/magnet=torrent.desktop;
+application/x-bittorrent=torrent.desktop;
+x-scheme-handler/mailto=emacs.desktop;
+text/plain=emacs.desktop;
+application/postscript=zathura.desktop;
+application/pdf=zathura.desktop;
+image/png=mvi.desktop;
+image/jpeg=mvi.desktop;
+image/gif=mvi.desktop;
+application/rss+xml=emacs.desktop
+video/x-matroska=mpv.desktop
+inode/directory=emacs.desktop
