@@ -1,3 +1,6 @@
+# Browser
+export BROWSER="librewolf"
+
 # Terminal
 export TERMINAL='st'
 export TERM=xterm-256color
