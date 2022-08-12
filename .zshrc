@@ -5,12 +5,10 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-
 # No validation (path checking), to ensure zsh files exist
 source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
-source .aliases
 
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
