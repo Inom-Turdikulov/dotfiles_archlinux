@@ -1,3 +1,4 @@
 Xft.dpi:       192
 Xcursor.theme: macOSBigSur
 cursor.size:   48
+st.font:       Monospace-11;
