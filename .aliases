@@ -1,0 +1,124 @@
+#!/usr/bin/env bash
+
+# Utilites
+alias cp="cp -i"                          # confirm before overwriting something
+alias df='df -h'                          # human-readable sizes
+alias free='free -m'                      # show sizes in MB
+alias git_submodlues='git submodule update --init --recursive --remote'
+alias less="less -FX"
+alias mux='tmux new -As0'
+alias translate='trans -shell -brief :ru+en'
+
+# Python aliases
+alias py="python3"
+alias py2="python2"
+
+# Easier navigation: .., ..., ...., ....., ~ and -
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias -- -="cd -"
+
+# Shortcuts
+alias doc="cd ~/Documents"
+alias dwn="cd ~/Downloads"
+alias des="cd ~/Desktop"
+alias prj="cd ~/Projects"
+alias vi="nvim"
+alias g='git'
+alias gc="git checkout"
+alias gp="git push"
+
+alias e=$EDITOR
+alias E="SUDO_EDITOR=\"TERM=xterm-24bit emacsclient -t -a emacs\" sudo -e"
+
+# Always enable colored `grep` output
+# Note: `GREP_OPTIONS="--color=auto"` is deprecated, hence the alias usage.
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# IP addresses
+alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias mylocalip="ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'"
+alias myips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
+
+# Show active network interfaces
+alias ifactive="ifconfig -a"
+
+# Flush Directory Service cache
+alias flush="systemctl restart systemd-resolved"
+
+# Canonical hex dump; some systems have this symlinked
+command -v hd > /dev/null || alias hd="hexdump -C"
+
+# Trim new lines and copy to clipboard
+alias c="tr -d '\n' | xclip -selection clipboard"
+
+# URL-encode strings
+alias urlencode='python -c "import sys, urllib.parse; print(urllib.parse.quote_plus(sys.argv[1]));"'
+
+# Merge PDF files, preserving hyperlinks
+# Usage: `mergepdf input{1,2,3}.pdf`
+alias mergepdf='gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=_merged.pdf'
+
+# Intuitive map function
+# For example, to list all directories that contain a certain file:
+# find . -name .gitattributes | map dirname
+alias map="xargs -n1"
+
+# One of @janmoesen’s ProTip™s, HTTP-client
+# For example, get IP address:
+# GET http://httpbin.org/ip
+for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
+	alias "${method}"="lwp-request -m '${method}'"
+done
+
+# Kill all the tabs in Chrome to free up memory
+# [C] explained: http://www.commandlinefu.com/commands/view/402/exclude-grep-from-your-grepped-output-of-ps-alias-included-in-description
+alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"
+
+# Reload the shell (i.e. invoke as a login shell)
+alias reload="exec ${SHELL} -l"
+
+# Print each PATH entry on a separate line
+alias path='echo -e ${PATH//:/\\n}'
+
+# List all files colorized in long format
+alias l="ls -lF"
+
+# List all files colorized in long format, excluding . and ..
+alias la="ls -lAF"
+
+# Info vi mode
+alias info='info --vi-keys'
+alias meminfo='cat /proc/meminfo'
+alias cpuinfo='cat /proc/cpuinfo'
+alias packages_list='expac "%n %m" -l'\n' -Q $(pacman -Qq) | sort -rhk 2 | less'
+
+# Get Software Updates, can be extended
+alias pip_clear='pip cache purge'
+alias pip_search='pip list | tail -n +3 | cut -d" " -f1 | xargs pip show -f | grep'
+
+# Color using watch
+alias watch='watch --color'
+alias fonts_mono='fc-list :spacing=mono family style | sort'
+alias fonts_all='fc-list | sort'
+alias autorandr_save="autorandr --force --save default"
+alias latest_file='/usr/bin/ls -t | head -n1'
+
+alias koreader_mount='sshfs -o ssh_command="ssh -p 2222" root@koreader:/mnt/us/documents ~/public/koreader/'
+alias koreader_umount='umount ~/public/koreader'
+
+alias fzf_history='cat ~/.cache/ytfzf/watch_hist | jq  ".[].title,.[].url"|tail -n 20'
+alias weather='curl -s "wttr.in/$(pass location)"'
+
+# Grep data from temp sensors
+alias systemperatures='sudo hddtemp /dev/disk/by-id/*ata*part1; sudo sensors'
+
+# Download files
+alias get="curl -O --retry 999 --retry-max-time 0 -C -"
+
+# Slideshow using mvi, 5 seconds
+alias slideshow="mvi --image-display-duration=5 --loop-file=no"
