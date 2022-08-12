@@ -1,5 +1,5 @@
 # Browser
-export BROWSER="librewolf"
+export BROWSER="qutebrowser"
 
 # Terminal
 export TERMINAL='st'
