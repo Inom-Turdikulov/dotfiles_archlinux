@@ -273,3 +273,7 @@ lfiles() {
         xdg-open "$files"
     fi
 }
+
+function sync_with_ignore() {
+    rsync -av --delete --exclude-from=.gitignore "$@"
+}
