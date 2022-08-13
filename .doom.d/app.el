@@ -137,8 +137,6 @@
 ;; csv
 (add-hook 'csv-mode-hook (lambda () (setq truncate-lines t)))
 
-(setq telega-server-libs-prefix "/usr/local")
-
 ;; (use-package! dirvish
 ;;   :config
 ;;   (dirvish-override-dired-mode))
