@@ -1,2 +1,0 @@
-#!/bin/sh
-mpv --config-dir=$HOME/.config/mvi "$@"
