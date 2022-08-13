@@ -1,5 +1,15 @@
 ;;; lang.el -*- lexical-binding: t; -*-
 
+;; Autoformat on save -
+(setq +format-on-save-enabled-modes
+      '(not emacs-lisp-mode  ; elisp's mechanisms are good enough
+            +javascript-npm-mode
+            javascript-mode
+            sql-mode         ; sqlformat is currently broken
+            tex-mode         ; latexindent is broken
+            web-mode
+            latex-mode))
+
 (add-hook 'flyspell-mode-hook 'flyspell-buffer)
 (add-hook 'text-mode-hook (lambda ()
                                  (when (not (equal major-mode 'org-mode))
