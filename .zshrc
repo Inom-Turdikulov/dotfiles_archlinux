@@ -1,3 +1,5 @@
+autoload -U colors && colors	# Load colors
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -21,15 +23,17 @@ unset file;
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-HISTFILE=~/.histfile
-HISTSIZE=20000
-SAVEHIST=20000
-setopt autocd beep extendedglob nomatch notify appendhistory
+HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
+HISTSIZE=10000000
+SAVEHIST=10000000
+setopt autocd beep extendedglob nomatch notify appendhistory interactive_comments
 bindkey -e
 
-# The following lines were added by compinstall
-zstyle :compinstall filename '/home/inom/.zshrc'
 
-autoload -Uz compinit
+# Basic auto/tab complete:
+autoload -U compinit
+zstyle ':completion:*' menu select
+zmodload zsh/complist
 compinit
-# End of lines added by compinstall
+_comp_options+=(globdots)		# Include hidden files.
+
