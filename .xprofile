@@ -1,5 +1,15 @@
+# We run programs here before xstart
+
 # Read the Xresources file if it exists.
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
-# Run clipmenud daemon.
-[[ -f /usr/bin/clipmenud ]] && /usr/bin/clipmenud &
+# Load the best monitor profile available
+[[ -f /usr/bin/autorandr ]] && /usr/bin/autorandr --change --default default &
+
+# Autostart some daemons
+autostart="clipmenud dunst unclutter"
+
+for program in $autostart; do
+	pidof -s "$program" || "$program" &
+done >/dev/null 2>&1
+
