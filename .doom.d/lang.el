@@ -18,3 +18,10 @@
 ;; set indentation to a more conventional value
 (setq opascal-indent-level 2)
 (setq opascal-case-label-indent 2)
+
+;; Syntax highlight
+(use-package! tree-sitter
+  :config
+  (require 'tree-sitter-langs)
+  (global-tree-sitter-mode)
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
