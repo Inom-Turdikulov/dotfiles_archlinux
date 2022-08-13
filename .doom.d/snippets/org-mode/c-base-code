@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: c-base-code
+# key: cbase
+# --
+#+begin_src C :results raw
+#include <stdio.h>
+
+int main()
+{
+
+}
+#+end_src
