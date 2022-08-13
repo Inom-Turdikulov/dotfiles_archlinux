@@ -24,7 +24,7 @@ unset file;
 HISTFILE=~/.histfile
 HISTSIZE=20000
 SAVEHIST=20000
-setopt autocd beep extendedglob notify appendhistory
+setopt autocd beep extendedglob nomatch notify appendhistory
 bindkey -e
 
 # The following lines were added by compinstall
