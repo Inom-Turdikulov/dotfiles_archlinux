@@ -175,3 +175,4 @@ config/beets/state.pickle
 
 # My custom ideas file (per project)
 inomoz-todo.org*
+personal.el
