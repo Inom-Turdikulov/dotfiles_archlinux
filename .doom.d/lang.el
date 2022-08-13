@@ -25,3 +25,16 @@
   (require 'tree-sitter-langs)
   (global-tree-sitter-mode)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+
+;; Input configuration
+(use-package! reverse-im
+  :demand t ; always load it
+  :after char-fold ; but only after `char-fold' is loaded
+  :bind
+  ("M-T" . reverse-im-translate-word) ; fix a word in wrong layout
+  :custom
+  (reverse-im-char-fold t) ; use lax matching
+  (reverse-im-read-char-advice-function #'reverse-im-read-char-include)
+  (reverse-im-input-methods '("russian-computer")) ; translate these methods
+  :config
+  (reverse-im-mode t)) ; turn the mode on
