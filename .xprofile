@@ -1,2 +1,5 @@
 # Read the Xresources file if it exists.
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
+
+# Run clipmenud daemon.
+[[ -f /usr/bin/clipmenud ]] && /usr/bin/clipmenud &
