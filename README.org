@@ -6,4 +6,5 @@ I personally use yadm - https://yadm.io/ to control dotfiles, which allow clone 
 * Features
 - zsh
 - emacs (doom emacs)
+- suckless software
 - tested on archlinux
