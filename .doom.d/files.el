@@ -51,11 +51,14 @@
           (shell-command-to-string (format "sxiv -t %s*" filename))
           )))
 
-;; Yadm tramp config
-(add-to-list 'tramp-methods
-             '("yadm"
-               (tramp-login-program "yadm")
-               (tramp-login-args (("enter")))
-               (tramp-login-env (("SHELL") ("/bin/sh")))
-               (tramp-remote-shell "/bin/sh")
-               (tramp-remote-shell-args ("-c"))))
+(use-package! tramp ;; with use-package
+  :config
+   ;; Yadm tramp config
+   (add-to-list 'tramp-methods
+                '("yadm"
+                  (tramp-login-program "yadm")
+                  (tramp-login-args (("enter")))
+                  (tramp-login-env (("SHELL") ("/bin/sh")))
+                  (tramp-remote-shell "/bin/sh")
+                  (tramp-remote-shell-args ("-c"))))
+  )
