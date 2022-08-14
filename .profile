@@ -33,7 +33,7 @@ export NODE_REPL_MODE='sloppy';
 export PYTHONIOENCODING='UTF-8';
 
 # Add `~/.local/bin`
-export PATH="$HOME/.local/bin:$HOME/.local/bin/statusbar:$PATH";
+export PATH="$HOME/.local/bin:$HOME/.local/bin/statusbar:$HOME/.emacs.d/bin:$PATH";
 
 # Configure default fzf (fuzzy-finder) command
 export FZF_DEFAULT_COMMAND="fd . $HOME"
