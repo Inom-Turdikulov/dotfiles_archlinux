@@ -20,7 +20,6 @@
 
  )
 
- (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))) ;; enable org-bullets
  (add-to-list 'org-modules 'org-habit t)
 
  ;; Automatically toggle Org mode LaTeX fragment previews as the cursor enters and exits them
@@ -97,27 +96,26 @@
 
 ;; Org-ref configuration
 
-(setq my-bibliography-file "~/Documents/library.bib")
+(setq! bibtex-completion-bibliography '("~/Documents/library.bib"))
+(setq! citar-bibliography '("~/Documents/library.bib"))
 
-(use-package! citar
-  :custom
-  (citar-bibliography '("~/Documents/library.bib")))
+(setq! bibtex-completion-notes-path "~/org/roam/")
+(setq! citar-notes-paths '("~/org/roam/"))
 
-(use-package! org-ref
-    ;:after org-roam
-    :config
-    (setq
-         bibtex-completion-bibliography '(my-bibliography-file)
-         bibtex-completion-notes my-bibliography-file
-         org-ref-note-title-format "* %y - %t\n :PROPERTIES:\n  :Custom_ID: %k\n  :NOTER_DOCUMENT: %F\n :ROAM_KEY: cite:%k\n  :AUTHOR: %9a\n  :JOURNAL: %j\n  :YEAR: %y\n  :VOLUME: %v\n  :PAGES: %p\n  :DOI: %D\n  :URL: %U\n :END:\n\n"
-         org-ref-notes-directory (file-truename "~/org/roam")
-         org-ref-notes-function 'orb-edit-notes
-    ))
+;; citar-library-paths '("/path/to/library/files/") ;; pdf's files
+;; bibtex-completion-library-path '("/path/to/library/path/") ;; pdf's files
+
+;; (use-package! org-ref
+;;     ;:after org-roam
+;;     :config
+;;     (setq
+;;          org-ref-note-title-format "* %y - %t\n :PROPERTIES:\n  :Custom_ID: %k\n  :NOTER_DOCUMENT: %F\n :ROAM_KEY: cite:%k\n  :AUTHOR: %9a\n  :JOURNAL: %j\n  :YEAR: %y\n  :VOLUME: %v\n  :PAGES: %p\n  :DOI: %D\n  :URL: %U\n :END:\n\n"
+;;          org-ref-notes-directory (file-truename "~/org/roam")
+;;          org-ref-notes-function 'orb-edit-notes
+;;     ))
 
 (after! org-ref
 (setq
- bibtex-completion-notes-path "~/org/roam/"
- bibtex-completion-bibliography my-bibliography-file
  bibtex-completion-pdf-field "file"
  bibtex-completion-notes-template-multiple-files
  (concat
@@ -247,5 +245,8 @@
 ;; Configure pdf-tools
 (use-package! pdf-tools
   :config
+  (pdf-tools-install)
   ;; This means that pdfs are fitted to width by default when you open them
-  (setq-default pdf-view-display-size 'fit-width))
+  (setq-default pdf-view-display-size 'fit-width)
+  :custom
+  (pdf-annot-activate-created-annotations t "automatically annotate highlights"))
