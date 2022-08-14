@@ -28,6 +28,7 @@
       password-cache-expiry nil                   ; I can trust my computers ... can't I?
       delete-by-moving-to-trash t                 ; Delete files to trash
       company-idle-delay 0.6                      ; Autocomplete delay timer
+      tramp-default-method "ssh"                  ; Default method for tramp
       tramp-use-ssh-controlmaster-options nil     ; Use the customisations in your ~/.ssh/config
       )
 
