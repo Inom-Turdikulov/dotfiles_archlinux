@@ -40,10 +40,6 @@ export FZF_DEFAULT_COMMAND="fd . $HOME"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd -t d . $HOME"
 
-# Set GPG TTY
-# If gnupg2 and gpg-agent 2.x are used, be sure to set the environment variable GPG_TTY.
-export GPG_TTY=$(tty)
-
 # Set ssh agent vars
 export SSH_AGENT_PID=""
 export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh"
