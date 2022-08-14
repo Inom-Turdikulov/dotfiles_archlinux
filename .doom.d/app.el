@@ -150,9 +150,4 @@
   )
 
 
-;; tree-sitter
-;; Don't highlight strings, in any language.
-(add-function :before-while tree-sitter-hl-face-mapping-function
-  (lambda (capture-name)
-    (not (string= capture-name "string"))))
 

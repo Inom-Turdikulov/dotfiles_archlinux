@@ -22,6 +22,12 @@
 ;; Syntax highlight
 (use-package! tree-sitter
   :config
+
+ ;; Don't highlight strings, in any language.
+ (add-function :before-while tree-sitter-hl-face-mapping-function
+   (lambda (capture-name)
+     (not (string= capture-name "string"))))
+
   (require 'tree-sitter-langs)
   (global-tree-sitter-mode)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
