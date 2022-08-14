@@ -6,7 +6,7 @@ export TERMINAL='st'
 export TERM=xterm-256color
 
 # Editors
-export EDITOR="env TERM=xterm-24bit emacsclient -t -a emacs"
+export EDITOR="e"
 export VISUAL="$EDITOR"
 export PAGER='less'
 
