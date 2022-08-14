@@ -21,15 +21,16 @@
 ;; they are implemented.
 
 ;; Basic configuration
-(setq undo-limit 80000000                         ; Raise undo-limit to 80Mb
-      evil-want-fine-undo t                       ; By default while in insert all changes are one big blob. Be more granular
-      x-select-enable-clipboard t                 ; Use system clipboard
-      auto-save-default t                         ; Nobody likes to loose work, I certainly don't
-      password-cache-expiry nil                   ; I can trust my computers ... can't I?
-      delete-by-moving-to-trash t                 ; Delete files to trash
-      company-idle-delay 0.6                      ; Autocomplete delay timer
-      tramp-default-method "ssh"                  ; Default method for tramp
-      tramp-use-ssh-controlmaster-options nil     ; Use the customisations in your ~/.ssh/config
+(setq undo-limit 80000000                              ; Raise undo-limit to 80Mb
+      evil-want-fine-undo t                            ; By default while in insert all changes are one big blob. Be more granular
+      x-select-enable-clipboard t                      ; Use system clipboard
+      auto-save-default t                              ; Nobody likes to loose work, I certainly don't
+      password-cache-expiry nil                        ; I can trust my computers ... can't I?
+      delete-by-moving-to-trash t                      ; Delete files to trash
+      company-idle-delay 0.6                           ; Autocomplete delay timer
+      tramp-default-method "ssh"                       ; Default method for tramp
+      tramp-use-ssh-controlmaster-options nil          ; Use the customisations in your ~/.ssh/config
+      projectile-project-search-path '("~/Projects/")  ; Main projects directory
       )
 
 ;; Personal configuraton, like name, email, etc
