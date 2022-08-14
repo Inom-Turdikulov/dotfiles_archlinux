@@ -47,3 +47,13 @@ export GPG_TTY=$(tty)
 # Set ssh agent vars
 export SSH_AGENT_PID=""
 export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh"
+
+# Archlinux specific environment variables
+export QT_QPA_PLATFORMTHEME=qt5ct
+export ELM_SCALE=2
+export GDK_SCALE=2
+export GDK_DPI_SCALE=0.5
+export QT_AUTO_SCREEN_SET_FACTOR=0
+export QT_SCALE_FACTOR=2
+export QT_FONT_DPI=96
+export XCURSOR_PATH=$RUNTIME/usr/share/icons
