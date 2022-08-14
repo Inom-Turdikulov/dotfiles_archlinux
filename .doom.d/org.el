@@ -5,34 +5,33 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
-
-(setq
-      org-log-into-drawer t                       ; Logging goesinto the LOGBOOK drawer
-      org-log-done 'time                          ; automatic logging is to keep track of when a certain TODO item was marked as done
-      org-log-reschedule (quote time)             ; information to record when the scheduling date of a task is modified.
-      org-refile-allow-creating-parent-nodes 'confirm)
-
 (after! org
-  ;;(setq org-element-use-cache nil)
-  (add-to-list 'org-modules 'org-habit t)
-  ;; Automatically toggle Org mode LaTeX fragment previews as the cursor enters and exits them
-  (add-hook 'org-mode-hook 'org-fragtog-mode)
-  (setq org-deadline-warning-days 7)
-  (setq org-agenda-files '("~/org/" "~/org/roam")))
+(setq
+ org-directory "~/org/"
+ org-default-notes-file "~/org/inbox.org" ;; default file for notes
+ org-agenda-files '("~/org/" "~/org/roam")
+ org-roam-directory (file-truename "~/org/roam")
+ org-roam-dailies-directory "../daily/"
+ org-log-into-drawer t                           ; Logging goesinto the LOGBOOK drawer
+ org-log-done 'time                              ; automatic logging is to keep track of when a certain TODO item was marked as done
+ org-log-reschedule (quote time)                 ; information to record when the scheduling date of a task is modified.
+ org-refile-allow-creating-parent-nodes 'confirm ; allow the creation of new nodes as refile targets.
+ org-deadline-warning-days 7                     ; deadline becomes active in 7 days
+
+ )
+
+ (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))) ;; enable org-bullets
+ (add-to-list 'org-modules 'org-habit t)
+
+ ;; Automatically toggle Org mode LaTeX fragment previews as the cursor enters and exits them
+ (add-hook 'org-mode-hook 'org-fragtog-mode)
+)
 
 ;; Insert krita app images into org files
 (use-package! org-krita
   :config
   (add-hook 'org-mode-hook 'org-krita-mode))
 
-;; org-roam
-;;
-
-(setq org-roam-directory (file-truename "~/org/roam"))
-
-;; This path is relative to org-roam-directory.
-(setq org-roam-dailies-directory "../daily/")
 (setq org-roam-capture-templates
      ; file-name should not include the extension
       (list
@@ -97,15 +96,18 @@
 
 
 ;; Org-ref configuration
-;;
 
-(setq my-bibliography-file "~/books/My Library.bib")
+(setq my-bibliography-file "~/Documents/library.bib")
+
+(use-package! citar
+  :custom
+  (citar-bibliography '("~/Documents/library.bib")))
+
 (use-package! org-ref
     ;:after org-roam
     :config
     (setq
-         citar-bibliography '(my-bibliography-file)
-         bibtex-completion-bibliography (list my-bibliography-file)
+         bibtex-completion-bibliography '(my-bibliography-file)
          bibtex-completion-notes my-bibliography-file
          org-ref-note-title-format "* %y - %t\n :PROPERTIES:\n  :Custom_ID: %k\n  :NOTER_DOCUMENT: %F\n :ROAM_KEY: cite:%k\n  :AUTHOR: %9a\n  :JOURNAL: %j\n  :YEAR: %y\n  :VOLUME: %v\n  :PAGES: %p\n  :DOI: %D\n  :URL: %U\n :END:\n\n"
          org-ref-notes-directory (file-truename "~/org/roam")
@@ -225,7 +227,8 @@
           ("HOLD" . +org-todo-onhold)
           ("PROJ" . +org-todo-project)
           ("NO"   . +org-todo-cancel)
-          ("KILL" . +org-todo-cancel))))
+          ("KILL" . +org-todo-cancel)))
+ )
 
 
 ;; Append addtional languages
@@ -240,3 +243,9 @@
     (shell-command-on-region (point-min) (point-max)
                              (format "pandoc -f markdown -t org -o %s"
                                      (concat (file-name-sans-extension (buffer-file-name)) ".org"))))
+
+;; Configure pdf-tools
+(use-package! pdf-tools
+  :config
+  ;; This means that pdfs are fitted to width by default when you open them
+  (setq-default pdf-view-display-size 'fit-width))
