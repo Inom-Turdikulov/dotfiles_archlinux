@@ -31,3 +31,6 @@ c.hints.chars = "rfvtgbyhnujm"
 # The page to open if :open -t/-b/-w is used without URL. Use
 # `about:blank` for a blank page.
 c.url.default_page = "about:blank"
+
+# Add flags (need test, not sure if it works)
+c.qt.args = ['enable-features=VaapiVideoDecoder', 'disable-features=UseChromeOSDirectVideoDecoder']
