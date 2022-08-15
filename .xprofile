@@ -13,3 +13,6 @@ for program in $autostart; do
 	pidof -s "$program" || "$program" &
 done >/dev/null 2>&1
 
+# Launch the screen locker
+[[ -f /usr/bin/slock ]] && \
+    xautolock -time 09 -locker "slock" -detectsleep -secure -corners 0-00 -cornerdelay 3 -cornerredelay 20 &
