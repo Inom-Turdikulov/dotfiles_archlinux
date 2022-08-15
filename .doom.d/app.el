@@ -149,5 +149,13 @@
   (ispell-hunspell-add-multi-dic "en_US,ru_RU")
   )
 
-
-
+;; Screenshot directory
+(use-package! org-attach-screenshot
+  :config
+  (setq org-attach-screenshot-relative-links t)
+  (setq org-attach-screenshot-dirfunction
+  (lambda ()
+    (progn (cl-assert (buffer-file-name))
+    (concat (file-name-sans-extension (buffer-file-name))
+     "-att")))
+  org-attach-screenshot-command-line "maim -s %f"))

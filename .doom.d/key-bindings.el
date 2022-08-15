@@ -14,6 +14,7 @@
 (global-set-key (kbd "C-S-<f3>") 'langtool-check-done)
 (global-set-key (kbd "C-<f4>") (lambda() (interactive) (magit-status "/yadm::")))
 
+
 (use-package! elfeed
   :general
   (:keymaps '(elfeed-show-mode-map elfeed-search-mode-map)
@@ -27,8 +28,8 @@
       "o e" (lambda() (interactive) (persp-switch "*EMMS*")))
 
 (map! :leader
-      :desc "Anki editor add note"
-      "N a" #'anki-editor-insert-note)
+      :desc "Org attach screenshot"
+      "N a" #'org-attach-screenshot)
 
 (map! :leader
       :desc "irc"
