@@ -15,4 +15,4 @@ done >/dev/null 2>&1
 
 # Launch the screen locker
 [[ -f /usr/bin/slock ]] && \
-    xautolock -time 09 -locker "slock" -detectsleep -secure -corners 0-00 -cornerdelay 3 -cornerredelay 20 &
+    xautolock -time 60 -locker "slock" -detectsleep -secure -corners 0-00 -cornerdelay 3 -cornerredelay 20 &
