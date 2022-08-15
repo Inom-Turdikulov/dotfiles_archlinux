@@ -24,6 +24,9 @@
 
  ;; Automatically toggle Org mode LaTeX fragment previews as the cursor enters and exits them
  (add-hook 'org-mode-hook 'org-fragtog-mode)
+
+ ;; disable line numbers in org-mode
+ (add-hook 'org-mode-hook (lambda () (display-line-numbers-mode -1)))
 )
 
 ;; Insert krita app images into org files
