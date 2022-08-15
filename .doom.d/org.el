@@ -250,3 +250,41 @@
   (setq-default pdf-view-display-size 'fit-width)
   :custom
   (pdf-annot-activate-created-annotations t "automatically annotate highlights"))
+
+;; Org image size config
+;; We try to get the width of the image, and when it is bigger than the current
+;; window we use the actual window size in the preview. When it is smaller than
+;; the window, we use the actual size. And if you use attr_org to set the image
+;; size, we use that instead. We use an :around advice to basically replace the
+;; built in call to org--create-inline-image call. It is only lightly tested
+;; with file links.
+(defun get-image-width (fname)
+  "Returns the min of image width and window width, unless :width
+is defined in an attr_org line."
+  (let* ((link (save-match-data (org-element-context)))
+     (paragraph (let ((e link))
+              (while (and (setq e (org-element-property
+                       :parent e))
+                  (not (eq (org-element-type e)
+                       'paragraph))))
+              e))
+     (attr_org (org-element-property :attr_org paragraph))
+     (pwidth (plist-get
+          (org-export-read-attribute :attr_org  paragraph) :width))
+     (width (when pwidth (string-to-number pwidth)))
+     open
+     img-buf)
+
+    (unless width
+      (setq open (find-buffer-visiting fname)
+        img-buf (or open (find-file-noselect fname))
+        width (min (window-width nil :pixels)
+               (car (image-size (with-current-buffer img-buf (image-get-display-property)) :pixels))))
+
+      (unless open (kill-buffer img-buf)))
+    width))
+
+(defun around-image-display (orig-fun file width)
+  (apply orig-fun (list file (get-image-width file))))
+
+(advice-add 'org--create-inline-image :around #'around-image-display)
