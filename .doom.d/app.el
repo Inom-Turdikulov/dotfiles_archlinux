@@ -58,12 +58,6 @@
    :tag-symbol 'def-email
    :save-vars '(major-mode default-directory))
 
-  (persp-def-buffer-save/load
-   :mode 'elfeed-search-mode
-   :mode-restore-function #'(lambda (_mode) (=rss)) ; or #'identity if you do not want to start shell process
-   :tag-symbol 'def-rss
-   :save-vars '(major-mode default-directory))
-
   ;; Persp-mode and Special Buffers
   (persp-def-buffer-save/load
    :mode 'vterm-mode :tag-symbol 'def-vterm-buffer

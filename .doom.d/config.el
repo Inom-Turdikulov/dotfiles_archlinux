@@ -42,7 +42,6 @@
 (load! "voice-recorder" doom-private-dir) ;; voice recorder functions
 (load! "files"          doom-private-dir) ;; File Processing System
 (load! "app"            doom-private-dir) ;; app specific config, like email, feeds, etc
-(load! "elfeed"         doom-private-dir) ;; elfeed rss config
 (load! "debugger"       doom-private-dir) ;; dap-debug and specific configurations
 (load! "lang"           doom-private-dir) ;; flyspell and programming languages specific configurations
 (load! "key-bindings"   doom-private-dir) ;; global and custom keybindings
