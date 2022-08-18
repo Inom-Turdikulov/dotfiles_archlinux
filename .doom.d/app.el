@@ -64,24 +64,6 @@
    :save-vars '(major-mode default-directory))
 )
 
-;; Copilot
-;; accept completion from copilot and fallback to company
-(defun my-tab ()
-  (interactive)
-  (or (copilot-accept-completion)
-      (company-indent-or-complete-common nil)))
-
-(use-package! copilot
-  :hook (prog-mode . copilot-mode)
-  :bind (("C-TAB" . 'copilot-accept-completion-by-word)
-         ("C-<tab>" . 'copilot-accept-completion-by-word)
-         :map company-active-map
-         ("<tab>" . 'my-tab)
-         ("TAB" . 'my-tab)
-         :map company-mode-map
-         ("<tab>" . 'my-tab)
-         ("TAB" . 'my-tab)))
-
 ;; Leetcode
 ;; leetcode-show-problem-by-slug will let you put to org files with a link
 (use-package! leetcode
@@ -91,7 +73,6 @@
   (setq leetcode-save-solutions t)
   (setq leetcode-directory "~/org/leetcode/")
   )
-
 
 ;; Evil specifc
 (use-package! evil
