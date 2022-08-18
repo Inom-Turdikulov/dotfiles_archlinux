@@ -88,15 +88,6 @@
         org-noter-notes-window-location 'horizontal-split
         ))
 
-(add-hook 'org-noter-insert-heading-hook 'semacs/insert-anki-text)
-(defun semacs/insert-anki-text()
-  (forward-line -2)
-  (insert ":ANKI_NOTE_TYPE: Basic\n")
-  (forward-line 1)
-  (evil-insert-state)
-)
-
-
 ;; Org-ref configuration
 
 (setq! bibtex-completion-bibliography '("~/Documents/library.bib"))
