@@ -260,3 +260,4 @@ is defined in an attr_org line."
   (apply orig-fun (list file (get-image-width file))))
 
 (advice-add 'org--create-inline-image :around #'around-image-display)
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 3))
