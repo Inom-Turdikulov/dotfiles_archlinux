@@ -157,28 +157,6 @@
 
 "idle")))
 
-;; org-babel
-;;
-(setq org-edit-src-content-indentation 0
-      org-src-tab-acts-natively t
-      org-src-preserve-indentation t)
-
-(add-hook 'org-babel-after-execute-hook 'semacs/ob-args-ext-session-reset)
-
-(defun semacs/ob-args-ext-session-reset()
-  (let* ((src-block-info (org-babel-get-src-block-info 'light))
-         (language (nth 0 src-block-info))
-         (arguments (nth 2 src-block-info))
-         (should-reset (member '(:session-reset . "yes") arguments))
-         (session (cdr (assoc :session arguments)))
-         (session-process
-          (cond ((equal language "python") (format "*python-%s*" session))
-                (t nil))))
-    (if (and should-reset (get-process session-process))
-        (kill-process session-process)))
-    (doom/reload-font)
-  )
-
 ;; Evil - TAB was changed to toggle only the visibility state of the current
 ;; subtree, rather than cycle through it recursively. This can be reversed with:
 (after! evil-org
