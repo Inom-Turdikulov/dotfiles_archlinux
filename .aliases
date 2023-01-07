@@ -8,8 +8,8 @@ alias git_submodlues='git submodule update --init --recursive --remote'
 alias less="less -FX"
 alias mux='tmux new -As0'
 alias translate='trans -shell -brief :ru+en'
-alias nvim="/usr/bin/nvim --listen /tmp/nvimsocket"
-alias e="/usr/bin/nvim --listen /tmp/nvimsocket"
+alias nvim="nvim --listen /tmp/nvimsocket"
+alias e="nvim --listen /tmp/nvimsocket"
 alias E="SUDO_EDITOR=nvim sudo -e"
 
 # Python aliases
@@ -29,6 +29,7 @@ alias dwn="cd ~/Downloads"
 alias des="cd ~/Desktop"
 alias prj="cd ~/Projects"
 alias vi="nvim"
+alias vim="nvim"
 alias g='git'
 alias gc="git checkout"
 alias gp="git push"
