@@ -1,0 +1,13 @@
+#!/bin/sh
+
+
+case "$(echo -e "Logout\nHibernate\nShutdown\nRestart\nSuspend\nLock" | dmenu -fn 'monospace:size=15' \
+     -p \
+    "Power:" -l 5)" in
+        Logout) killall dwm;;
+        Hibernate) exec systemctl hibernate;;
+        Shutdown) exec systemctl poweroff;;
+        Restart) exec systemctl reboot;;
+        Suspend) exec systemctl suspend;;
+        Lock) exec slock;;
+esac

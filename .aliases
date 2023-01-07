@@ -8,8 +8,8 @@ alias git_submodlues='git submodule update --init --recursive --remote'
 alias less="less -FX"
 alias mux='tmux new -As0'
 alias translate='trans -shell -brief :ru+en'
-alias nvim="NVIM_LISTEN_ADDRESS=/tmp/nvimsocket nvim"
-alias e="NVIM_LISTEN_ADDRESS=/tmp/nvimsocket /usr/bin/nvim"
+alias nvim="/usr/bin/nvim --listen /tmp/nvimsocket"
+alias e="/usr/bin/nvim --listen /tmp/nvimsocket"
 alias E="SUDO_EDITOR=nvim sudo -e"
 
 # Python aliases
@@ -123,3 +123,9 @@ alias get="curl -O --retry 999 --retry-max-time 0 -C -"
 
 # Slideshow using mvi, 5 seconds
 alias slideshow="mvi --image-display-duration=5 --loop-file=no"
+
+# Convert djvu with ocr to pdf
+alias djvu2pdf='docker run --rm -u $(id -u):$(id -g) -v $(pwd):/opt/work ilyabystrov/djvu2pdf'
+
+# Rename all files
+alias rename_all_numbers=ls -v | cat -n | while read n f; do mv -n "$f" "$n.ext"; done

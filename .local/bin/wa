@@ -1,54 +1,138 @@
 #!/bin/bash
 
-#  Description
-#  -----------
-#  <img src="https://developer.run/pic/wa_full.png"/>
-#  <img src="https://developer.run/pic/wa.png"/>
-#  <img src="https://developer.run/pic/wa2.png"/>
+# https://github.com/ASzc/tungsten
+
 #
-#  Using Wolfram Alpha in command line. See [blog post](http://developer.run/37) for description and more ideas.
+# Copyright 2012 Sairon Istyar
+# Copyright 2013-2020 Alex Szczuczko
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
 
+#
+# Setup
+#
 
-#  Author: [Dmitry](http://dmi3.net) [Source](https://github.com/dmi3/bin)
+set -euo pipefail
 
-#  Requirements
-#  ------------
-#  * Make sure to configure variables in script
-#  * Put [api key](https://products.wolframalpha.com/api/) in `APPID`
-#  * For `VIEWER`, you can use text only api and **optionaly** use [terminal that supports images](https://developer.run/40)
-#  **or** `sudo apt-get install imagemagick` to view images.
-#  * Configure `BG` and `FG` variables depending on color scheme
+error () {
+    echo "$@" >&2
+}
 
-#  Usage
-#  ------------
-#      ➤ wa helsinki to dublin plane
-#      2 hours 20 minutes
-#      ➤ wa time in dublin
-#      5:37:57 pm GMT; Friday, January 27, 2017
-#      ➤ wa 15.36 english money to eur
-#      14.35 euros
-#      ➤ wa days till nov 16
-#      293 days
-#      ➤ wa 154Mbit/s to MB/s
-#      19.2 megabytes per second
-#      ➤ wa brick red hex
-#      #AB0303
-#      ➤ wa weather in moscow
-#      9 degrees Celsius and cloudy, with light winds✖
-#      ➤ wa plot x=y^2
-#      [...draws plot if supported]
-#      ➤ # many many more usages... https://www.wolframalpha.com/examples/
+#
+# Load stored API key
+#
 
+key_pattern='[A-Z0-9]{6}-[A-Z0-9]{10}'
 
-APPID=$(cat ~/.wolfram_api_key 2>/dev/null) # Get one at https://products.wolframalpha.com/api/
-IMAGE_VIEWER="mvi"
-BG="black"                                              # Black background
-FG="white"                                              # Match color to your terminal
-test "$APPID" == "" && echo "\$APPID not set in ${BASH_SOURCE[0]}"
+if ! [ -v WOLFRAM_API_KEY ]
+then
+    # Load the contents of $key_path file as WOLFRAM_API_KEY
+    WOLFRAM_API_KEY="$(pass wa_key)"
+    if ! [[ "$WOLFRAM_API_KEY" =~ $key_pattern ]]
+    then
+        error "WolframAlpha API key read from file '$key_path' doesn't match the validation pattern"
+        exit 2
+    fi
+fi
 
-RESPONSE=$(curl -s "https://api.wolframalpha.com/v1/result?appid=$APPID&units=metric&" --data-urlencode "i=$*" | tee /dev/tty)
+#
+# Read the query
+#
 
-# Remove next if you are fine with text only api, and don't want to see any images
-test "No short answer available" = "$RESPONSE"\
-     && echo ", downloading full answer..."\
-     && curl -s "https://api.wolframalpha.com/v1/simple?appid=$APPID&units=metric&foreground=$FG&background=$BG&width=1200" --data-urlencode "i=$*" > "/tmp/wa.png" && $IMAGE_VIEWER "/tmp/wa.png" >/dev/null 2>&1 &
+query="${@:-}"
+
+if [ -z "$query" ]
+then
+    error "You must specify a query to make"
+    exit 5
+fi
+
+#
+# Perform the query
+#
+curl_args=(
+    -sSf -G
+    --data-urlencode "output=JSON"
+    --data-urlencode "format=plaintext"
+    --data-urlencode "input=$query"
+)
+if [ -n "$WOLFRAM_API_KEY" ]
+then
+    curl_args+=(
+        --data-urlencode "appid=$WOLFRAM_API_KEY"
+        "https://api.wolframalpha.com/v2/query"
+    )
+    iconv_from="UTF-8"
+else
+    error "Querying without an API key. There may be incorrect / missing characters."
+    error "To query with an API key, add the key to $key_path as described in the README"
+    curl_args+=(
+        --data-urlencode "type=full"
+        -e "https://products.wolframalpha.com/api/explorer/"
+        "https://www.wolframalpha.com/input/apiExplorer.jsp"
+    )
+    iconv_from="ISO-8859-1"
+fi
+result="$(curl "${curl_args[@]}" | iconv -f "$iconv_from" -t UTF-8)"
+
+#
+# Process the result of the query
+#
+
+query_result () {
+    set -euo pipefail
+    jq -r "$1" <<<"$result"
+}
+
+# Handle error results
+if [ "$(query_result '.queryresult.error')" != "false" ]
+then
+    error_msg="$(query_result '.queryresult.error.msg')"
+
+    if [ "$error_msg" = "Invalid appid" ]
+    then
+        error "WolframAlpha API rejected the given API key"
+        error "Modify or remove the key stored in file '$key_path'"
+        exit 6
+    else
+        error "WolframAlpha API returned an error: $error_msg"
+        exit 7
+    fi
+fi
+
+# Only colourise if stdout is a terminal
+if [ -t 1 ]
+then
+    titleformat='\e[1;34m%s\e[m\n'
+else
+    titleformat='%s\n'
+fi
+
+# Handle "cannot iterate over null" jq error
+if [ "$(query_result '.queryresult.pods[0].subpods[0].plaintext')" == "null" ]
+then
+    error "WolframAlpha API returned no results for the given query"
+    exit 8
+fi
+
+# Print title+plaintext for each pod with text in it's subpod/plaintext child
+while read -r title
+do
+    printf "$titleformat" "$title"
+
+    # Process the >0 plaintext elements decendent of the current pod
+    query_result ".queryresult.pods[] | select(.title == \"$title\") | .subpods[].plaintext"
+done < <(query_result '.queryresult.pods[] | select(.subpods[0].plaintext != "") | .title')
+
