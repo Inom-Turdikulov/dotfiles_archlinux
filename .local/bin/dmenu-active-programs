@@ -2,7 +2,7 @@
 # Search through open programs and switch to their tag
 # wmctrl required
 
-program=$(wmctrl -lx | cut -d ' ' -f4 | cut -d '.' -f2 | tr "[:upper:]" "[:lower:]" | dmenu -p "⚡"  -fn "monospace:size=15")
+program=$(wmctrl -lx | cut -d ' ' -f4 | cut -d '.' -f2 | tr "[:upper:]" "[:lower:]" | dmenu -i -p "⚡"  -fn "monospace:size=15")
 
 if [ ! -z "$program" -a "$program" != " " ]; then
   wmctrl -x -a "$program"
