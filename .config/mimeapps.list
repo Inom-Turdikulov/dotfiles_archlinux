@@ -1,27 +1,77 @@
 [Default Applications]
-
-# xdg-open will use these settings to determine how to open filetypes.
-# These .desktop entries can also be seen and changed in ~/.local/share/applications/
-
-text/x-shellscript=emacs.desktop;
+text/x-shellscript=nvim.desktop;
 x-scheme-handler/magnet=torrent.desktop;
 application/x-bittorrent=torrent.desktop;
-x-scheme-handler/mailto=emacs.desktop;
-text/plain=emacs.desktop;
-image/png=imv.desktop;
-image/jpeg=imv.desktop;
-image/gif=imv.desktop;
+x-scheme-handler/mailto=neomutt.desktop;
+text/plain=nvim.desktop;
 video/x-matroska=mpv.desktop
-inode/directory=emacs.desktop
-text/html=browser.desktop
-text/xml=browser.desktop
-text/mml=browser.desktop
-application/xhtml+xml=browser.desktop
-application/xml=browser.desktop
-x-scheme-handler/http=browser.desktop
-x-scheme-handler/https=browser.desktop
-application/pdf=org.pwmt.zathura-pdf-mupdf.desktop
+inode/directory=nvim.desktop
+text/xml=firefox.desktop
+text/mml=firefox.desktop
+application/xhtml+xml=firefox.desktop
+application/xml=firefox.desktop
+x-scheme-handler/http=firefox.desktop
+x-scheme-handler/https=firefox.desktop
 application/postscript=org.pwmt.zathura-pdf-mupdf.desktop
-text/csv=visidata.desktop
 text/tab-separated-values=visidata.desktop
+x-scheme-handler/rdp=org.remmina.Remmina.desktop
+x-scheme-handler/spice=org.remmina.Remmina.desktop
+x-scheme-handler/vnc=org.remmina.Remmina.desktop
+x-scheme-handler/remmina=org.remmina.Remmina.desktop
+application/x-remmina=org.remmina.Remmina.desktop
+x-scheme-handler/tg=userapp-Telegram Desktop-X1PQW1.desktop
+x-scheme-handler/eclipse+command=_usr_lib_dbeaver_.desktop
+image/png=imv.desktop
+application/epub+zip=org.pwmt.zathura-pdf-mupdf.desktop
+audio/mpeg=mpv.desktop
 
+[Added Associations]
+x-scheme-handler/rdp=org.remmina.Remmina.desktop;
+x-scheme-handler/spice=org.remmina.Remmina.desktop;
+x-scheme-handler/vnc=org.remmina.Remmina.desktop;
+x-scheme-handler/remmina=org.remmina.Remmina.desktop;
+application/x-remmina=org.remmina.Remmina.desktop;
+x-scheme-handler/tg=userapp-Telegram Desktop-BGAXR1.desktop;userapp-Telegram Desktop-X1PQW1.desktop;
+application/x-7z-compressed=xarchiver.desktop;
+application/gzip=xarchiver.desktop;
+application/vnd.rar=xarchiver.desktop;
+application/x-compressed-tar=xarchiver.desktop;
+application/zip=xarchiver.desktop;
+application/x-shellscript=nvim.desktop;
+audio/x-mpegurl=mpv.desktop;
+audio/mpeg=firefox.desktop;mpv.desktop;org.strawberrymusicplayer.strawberry.desktop;audacity.desktop;
+audio/x-vorbis+ogg=mpv.desktop;
+audio/x-wav=mpv.desktop;
+application/msword=libreoffice-writer.desktop;
+application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop;
+application/vnd.oasis.opendocument.presentation=libreoffice-impress.desktop;
+application/vnd.oasis.opendocument.spreadsheet=libreoffice-calc.desktop;
+application/vnd.oasis.opendocument.text=libreoffice-writer.desktop;
+application/pdf=org.pwmt.zathura-pdf-mupdf.desktop;
+application/vnd.ms-powerpoint=libreoffice-impress.desktop;
+application/vnd.openxmlformats-officedocument.presentationml.presentation=libreoffice-impress.desktop;
+application/rtf=libreoffice-writer.desktop;
+application/vnd.ms-excel=libreoffice-calc.desktop;
+application/vnd.openxmlformats-officedocument.spreadsheetml.sheet=libreoffice-calc.desktop;
+image/gif=imv.desktop;
+image/vnd.microsoft.icon=krita_qimageio.desktop;
+image/jpeg=imv.desktop;
+image/svg+xml=org.inkscape.Inkscape.desktop;
+image/tiff=imv.desktop;
+text/csv=visidata.desktop;
+text/html=firefox.desktop;
+text/markdown=nvim.desktop;
+video/x-msvideo=mpv.desktop;
+video/quicktime=mpv.desktop;
+video/mp4=mpv.desktop;
+video/x-theora+ogg=mpv.desktop;
+video/x-ms-wmv=mpv.desktop;
+image/png=imv.desktop;
+application/atom+xml=nvim.desktop;
+application/epub+zip=org.pwmt.zathura-pdf-mupdf.desktop;
+
+[Default Applications]
+x-scheme-handler/uniginesdk=unigine_browser.desktop;
+
+[Added Associations]
+x-scheme-handler/uniginesdk=unigine_browser.desktop;
