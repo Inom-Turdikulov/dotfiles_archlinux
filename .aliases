@@ -8,6 +8,9 @@ alias git_submodlues='git submodule update --init --recursive --remote'
 alias less="less -FX"
 alias mux='tmux new -As0'
 alias translate='trans -shell -brief :ru+en'
+alias nvim="NVIM_LISTEN_ADDRESS=/tmp/nvimsocket nvim"
+alias e="NVIM_LISTEN_ADDRESS=/tmp/nvimsocket /usr/bin/nvim"
+alias E="SUDO_EDITOR=nvim sudo -e"
 
 # Python aliases
 alias py="python3"
@@ -30,8 +33,6 @@ alias g='git'
 alias gc="git checkout"
 alias gp="git push"
 
-alias e=$EDITOR
-alias E="SUDO_EDITOR=\"TERM=xterm-24bit emacsclient -t -a emacs\" sudo -e"
 
 # Always enable colored `grep` output
 # Note: `GREP_OPTIONS="--color=auto"` is deprecated, hence the alias usage.
