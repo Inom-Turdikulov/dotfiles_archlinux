@@ -1,7 +1,7 @@
 [global]
     # Visual config
     frame_width = 1
-    frame_color = "#788388"
+    frame_color = "#abb2bf"
 
     # Define a color for the separator.
     # possible values are:
@@ -15,7 +15,7 @@
     sort = yes
 
     idle_threshold = 120
-    font = Monospace 11
+    font = Monospace 15
     line_height = 0
     markup = full
 
@@ -170,18 +170,18 @@
     # context = ctrl+mod1+c
 
 [urgency_low]
-    background = "#263135"
-    foreground = "#A6A6A6"
+    background = "#3e4451"
+    foreground = "#abb2bf"
     timeout = 3
 
 [urgency_normal]
-    background = "#263135"
-    foreground = "#A6A6A6"
+    background = "#282c34"
+    foreground = "#abb2bf"
     timeout = 3
 
 [urgency_critical]
-    background = "#282828"
-    foreground = "#ebdbb2"
+    background = "#e06c75"
+    foreground = "#ffffff"
     timeout = 3
 
 # Every section that isn't one of the above is interpreted as a rules to
