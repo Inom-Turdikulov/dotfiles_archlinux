@@ -1,13 +1,14 @@
 ! font settings
-Xft.dpi:        192
 Xft.antialias:  true
 Xft.hinting:    true
 Xft.rgba:       rgb
 Xft.hintstyle:  hintslight
+! Use a truetype font and size.
+xterm*faceName: Monospace
+xterm*faceSize: 15
 
-Xcursor.theme:  macOSBigSur
-cursor.size:    48
-st.font:        Monospace-14;
+Xcursor.theme:  Breeze Light
+cursor.size:    32
 
 ! Custom
 ! Original theme https://github.com/nathanbuchar/atom-one-dark-terminal
