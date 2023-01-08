@@ -1,0 +1,3 @@
+[submodule "/home/inom/.local/bin/morc_menu"]
+	path = /home/inom/.local/bin/morc_menu
+	url = https://github.com/Boruch-Baum/morc_menu
