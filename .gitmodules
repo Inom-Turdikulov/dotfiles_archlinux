@@ -1,3 +1,6 @@
 [submodule "/home/inom/.local/bin/morc_menu"]
 	path = /home/inom/.local/bin/morc_menu
 	url = https://github.com/Boruch-Baum/morc_menu
+[submodule "/home/inom/.local/share/zsh-toggle-command-prefix"]
+	path = /home/inom/.local/share/zsh-toggle-command-prefix
+	url = https://github.com/xPMo/zsh-toggle-command-prefix
