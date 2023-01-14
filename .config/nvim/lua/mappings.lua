@@ -93,6 +93,11 @@ nmap("<leader>dt", "<cwd>lua require'neotest'.run.run())")
 -- Prettier
 nmap("<leader>pd", ": !prettier --parser=".. vim.bo.filetype .. " -w '%'<CR>")
 
+-- Save
+imap("<C-s>", "<C-O>:w<CR>")
+nmap("<C-s>", ":w<CR>")
+vmap("<C-s>", ":w<CR>")
+
 --[[ Run the current file
 
 require("neotest").run.run(vim.fn.expand("%"))
