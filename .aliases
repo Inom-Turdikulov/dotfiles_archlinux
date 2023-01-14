@@ -130,3 +130,19 @@ alias djvu2pdf='docker run --rm -u $(id -u):$(id -g) -v $(pwd):/opt/work ilyabys
 
 # Rename all files
 alias rename_all_numbers=ls -v | cat -n | while read n f; do mv -n "$f" "$n.ext"; done
+
+# Taskwarrior
+alias in='task add +in'
+
+# Think alias useful when you want decide what do with task later
+# remember, when using think, you should enter a simple yes/no question.
+alias think='tick +1d'
+
+# Get total memory usage
+alias mem='smem -ktP '
+
+# download page into warc-file
+alias wget_warc='wget --delete-after --no-directories --warc-file=epfl --recursive --level=1'
+
+# get window info
+alias xprop_hold='$TERMINAL --hold -e xprop'
