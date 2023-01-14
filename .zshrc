@@ -54,7 +54,13 @@ if [[ -r "/usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh" ]]; then
   }
 fi
 
+if [[ -r "$HOME/.local/share/zsh-toggle-command-prefix/toggle-command-prefix.zsh" ]]; then
+  source "$HOME/.local/share/zsh-toggle-command-prefix/toggle-command-prefix.zsh"
+fi
 
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+
+# Disable Software Flow Control to use C-s and C-q in programs
+stty -ixon
