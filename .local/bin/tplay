@@ -1,0 +1,5 @@
+#!/bin/sh
+URL=$(xclip -o -selection clipboard)
+#webtorrent "$URL" --mpv
+notify-send "Opening URL $URL"
+webtorrent "$URL" --mpv

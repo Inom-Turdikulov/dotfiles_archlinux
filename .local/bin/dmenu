@@ -1,0 +1,2 @@
+#!/bin/sh
+/usr/bin/dmenu -fn "monospace:size=15" -p "🔍" "$@"

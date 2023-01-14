@@ -1,0 +1,9 @@
+#!/bin/sh -eu
+in=$1 out=$2 page0=${3:-} page1=${4:-$page0}
+${CHROME:-chromium} --headless --disable-gpu --run-all-compositor-stages-before-draw --print-to-pdf-no-header --print-to-pdf="$out" "$in"
+GS_ARGS=
+if [ -n "$page0" ]; then
+	GS_ARGS="-dFirstPage=$page0 -dLastPage=$page1"
+fi
+gs -sDEVICE=pdfwrite -dNOPAUSE -dBATCH $GS_ARGS -sOutputFile="$2.tmp" "$2"
+mv "$2.tmp" "$2"

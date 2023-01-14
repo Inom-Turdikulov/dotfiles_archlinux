@@ -1,0 +1,17 @@
+#!/bin/bash
+APPLIST_TO_TERMINATE=(
+    steam
+    parsec
+    pcmanfm
+    retroarch
+)
+
+# Iterate the string array using for loop
+for proc in ${APPLIST_TO_TERMINATE[@]}; do
+   killall -s15 $proc || echo $proc not found!
+done
+
+sleep 10
+
+slock &
+systemctl hibernate

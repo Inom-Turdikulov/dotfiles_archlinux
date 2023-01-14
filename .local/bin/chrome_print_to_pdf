@@ -1,3 +1,0 @@
-#!/bin/sh
-chromium --headless --no-margins --disable-gpu --print-to-pdf-no-header --print-to-pdf="$1" $2
-

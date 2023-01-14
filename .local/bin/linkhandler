@@ -1,10 +1,12 @@
 #!/bin/sh
 
 # Feed script a url or file location.
-# If an image, it will view in sxiv,
-# if a video or gif, it will view in mpv
-# if a music file or pdf, it will download,
-# otherwise it opens link in browser.
+
+PDF_VIEWER=/usr/bin/zathura
+IMAGE_VIEWER=imv
+SVG_IMAGE_VIEWER="/usr/bin/inkview"
+MEDIA_VIEWER=mpv
+FALLBACK_BROWSER=firefox
 
 if [ -z "$1" ]; then
 	url="$(xclip -o)"
@@ -13,14 +15,30 @@ else
 fi
 
 case "$url" in
-	*mkv|*webm|*mp4|*youtube.com/watch*|*youtube.com/playlist*|*youtube.com/shorts*|*youtu.be*|*hooktube.com*|*bitchute.com*|*videos.lukesmith.xyz*|*odysee.com*)
-		setsid -f mpv -quiet "$url" >/dev/null 2>&1 ;;
-	*png|*jpg|*jpe|*jpeg|*gif)
-		curl -sL "$url" > "/tmp/$(echo "$url" | sed "s/.*\///;s/%20/ /g")" && imv -a "/tmp/$(echo "$url" | sed "s/.*\///;s/%20/ /g")"  >/dev/null 2>&1 & ;;
-	*pdf|*cbz|*cbr)
-		zathura "$url" >/dev/null 2>&1 ;;
-	*mp3|*flac|*opus|*mp3?source*)
-		mpa "$url" 'curl -LO'  >/dev/null 2>&1 ;;
+    *files.slack.com\/files-pri*)
+		setsid -f "$FALLBACK_BROWSER" "$1" >/dev/null 2>&1 ;;
+    *twitch.tv\/*)
+		notify-send "Twitch stream $1"
+		playerctl -p $MEDIA_VIEWER pause
+		setsid -f $MEDIA_VIEWER --quiet "$1" >/dev/null 2>&1 ;;
+	*m3u8|*m3u8\?loc=nl|*mkv|*webm|*mp4|*youtube.com/watch*|*youtube.com/playlist*|*youtu.be*|*hooktube.com*|*bitchute.com*|*videos.lukesmith.xyz*|*odysee.com*)
+		notify-send "MPV $1"
+		playerctl -p $MEDIA_VIEWER pause
+		setsid -f $MEDIA_VIEWER --quiet "$1" >/dev/null 2>&1 ;;
+	*http*png|*http*jpg|*http*gif|*amuniversal.com*|*.jpg?width=*)
+	 	curl -sL "$1" > "/tmp/$(echo "$1" | sed "s/.*\///;s/%20/ /g")" && $IMAGE_VIEWER "/tmp/$(echo "$1" | sed "s/.*\///;s/%20/ /g")"  >/dev/null 2>&1 & ;;
+	*png|*jpg|*jpe|*jpeg|*gif|*amuniversal.com*|*.jpg?width=*)
+		$IMAGE_VIEWER "$@" 2>&1 & ;;
+	*svg|*ai|wmf)
+		curl -sL "$1" > "/tmp/$(echo "$1" | sed "s/.*\///;s/%20/ /g")" && $SVG_IMAGE_VIEWER "/tmp/$(echo "$1" | sed "s/.*\///;s/%20/ /g")"  >/dev/null 2>&1 & ;;
+	*pdf|*cbz|*cbr|*epub|*djvu)
+		curl -sL "$1" > "/tmp/$(echo "$1" | sed "s/.*\///;s/%20/ /g")" && $PDF_VIEWER "/tmp/$(echo "$1" | sed "s/.*\///;s/%20/ /g")"  >/dev/null 2>&1 & ;;
+	*mp3|*flac|*opus|*mp3?*)
+		#qndl "$1" 'curl -LO'  >/dev/null 2>&1 ;;
+		notify-send "Open $1"
+		playerctl -p $MEDIA_VIEWER play-pause
+		setsid -f $MEDIA_VIEWER --quiet "$1" >/dev/null 2>&1 ;;
 	*)
-		[ -f "$url" ] && setsid -f "$TERMINAL" -e "$EDITOR" "$url" >/dev/null 2>&1 || setsid -f "$BROWSER" "$url" >/dev/null 2>&1
+		[ -f "$1" ] && setsid -f "$TERMINAL" -e "$EDITOR" "$1" >/dev/null 2>&1 || setsid -f "$FALLBACK_BROWSER" "$1" >/dev/null 2>&1
 esac
+

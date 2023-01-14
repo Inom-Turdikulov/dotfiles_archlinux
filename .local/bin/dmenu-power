@@ -6,7 +6,7 @@ case "$(echo -e "Logout\nHibernate\nShutdown\nRestart\nSuspend\nLock" | dmenu -f
     "Power:" -l 5)" in
         Logout) killall dwm;;
         Hibernate) exec systemctl hibernate;;
-        Shutdown) exec systemctl poweroff;;
+        Shutdown) exec graceful-shutdown;;
         Restart) exec systemctl reboot;;
         Suspend) exec systemctl suspend;;
         Lock) exec slock;;

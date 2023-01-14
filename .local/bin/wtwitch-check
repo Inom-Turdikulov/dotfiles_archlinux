@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+MESSAGE=$(/usr/bin/wtwitch c|\
+    grep -E '.*?: '|\
+    grep -o -E '\S.*\S|\S'|\
+    sed 's/\:/ /1'|\
+    awk '{print " "$0}'|\
+    sed -e "s/\x1b\[.\{1,5\}m//g")
+notify-send -t 16000 "$MESSAGE"

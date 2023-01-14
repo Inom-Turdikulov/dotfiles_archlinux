@@ -1,0 +1,8 @@
+#!/bin/sh
+echo "Usage: min max"
+RESULT=$(random-dot-org integers --min $1 --max $2 --number 1)
+RESULT="Result: $RESULT, range $1...$2"
+notify-send -t 10000 "$RESULT" >/dev/null 2>&1
+echo $RESULT
+
+

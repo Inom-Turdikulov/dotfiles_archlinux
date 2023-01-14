@@ -1,0 +1,19 @@
+#!/bin/sh
+SAVE_PATH=~/Videos/recordings
+FILE_NAME=$(date +"%Y-%m-%d-%H-%M-%S")-$1.mp4
+
+# -fs 1 073 741 824 limit video size to 1GB
+ffmpeg -vaapi_device /dev/dri/renderD128 \
+    -f x11grab \
+    -i :0 \
+    -f pulse \
+    -ac 2 \
+    -i default \
+    -vf 'hwupload,scale_vaapi=format=nv12' \
+    -fs 1073741824 \
+    -c:v h264_vaapi \
+    -qp 19 \
+    -bf 2\
+    "$SAVE_PATH/$FILE_NAME"
+
+echo "Path: $SAVE_PATH/$FILE_NAME"

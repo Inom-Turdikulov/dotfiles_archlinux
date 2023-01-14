@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+home=${1:-$HOME}
+echo $home
+export FZF_DEFAULT_COMMAND="rg --files --no-ignore --follow -g '!{.git,node_modules,tmp,build,downloads}/*'"
+
+cd "$home" && file="$(fzf --reverse)" && [ -f "$file" ] && xdg-open "$file"
