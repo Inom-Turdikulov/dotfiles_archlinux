@@ -47,7 +47,24 @@ return require('packer').startup(function(use)
     -- A dark Vim/Neovim color scheme for the GUI and 16/256/true-color terminal
     use 'navarasu/onedark.nvim'
     require('onedark').setup {
-        style = 'darker'
+        style = 'darker',
+        -- Change code style ---
+        -- Options are italic, bold, underline, none
+        -- You can configure multiple style with comma seperated, For e.g., keywords = 'italic,bold'
+        code_style = {
+            comments = 'none',
+            keywords = 'none',
+            functions = 'none',
+            strings = 'none',
+            variables = 'none'
+        },
+        -- redefine an existing color
+        colors = {
+            bg1 = "#2d3343",
+            bg3 = "#2a324a",
+            fg = "#b1b4b9",
+            grey = "#646568",
+        },
     }
     require('onedark').load()
 
