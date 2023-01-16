@@ -280,6 +280,12 @@ function sync_with_ignore() {
 
 audio-join() ffmpeg -i "concat:${(j:|:)@[2,-1]}" -acodec copy $1
 
+# Copy path to file
 function link2clip() {
     readlink -f $1 | xsel --clipboard
+}
+
+# Upload image to imgur
+function link2imgur() {
+    imgur $(readlink -f "$@")
 }
