@@ -146,3 +146,8 @@ alias wget_warc='wget --delete-after --no-directories --warc-file=epfl --recursi
 
 # get window info
 alias xprop_hold='$TERMINAL --hold -e xprop'
+
+alias fix_concated_mp3='mp3val -f -nb'
+
+# Merge, split or and manipulate audiobook files with chapters
+alias m4b-tool-merge='docker run -it --rm -u $(id -u):$(id -g) -v "$(pwd)":/mnt sandreas/m4b-tool:latest merge -v --jobs=6 --output-file="output/" --batch-pattern="input/%g/%a/%n/" "input/"'
