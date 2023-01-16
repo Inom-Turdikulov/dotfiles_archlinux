@@ -1,4 +1,7 @@
 #!/bin/sh
+
+lockfile -r 0 /tmp/pomo.sh.lock || exit 1
+
 if [[ "$1" == "--minutes="* ]]; then
     MINUTES="${1#--minutes=}"; shift
 elif [[ "$1" == "-m"* ]]; then
