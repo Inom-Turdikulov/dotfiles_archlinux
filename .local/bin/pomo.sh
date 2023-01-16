@@ -1,6 +1,12 @@
 #!/bin/sh
-
-lockfile -r 0 /tmp/pomo.sh.lock || exit 1
+another_instance()
+{
+    notify-send "There is another instance running, exiting"
+    exit 1
+}
+if [ "$(pgrep pomo.sh)" != $$ ]; then
+     another_instance
+fi
 
 if [[ "$1" == "--minutes="* ]]; then
     MINUTES="${1#--minutes=}"; shift
