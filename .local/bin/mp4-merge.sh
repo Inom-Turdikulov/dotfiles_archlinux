@@ -8,7 +8,7 @@
 # ffmpeg       | ffmpeg/ffprobe  | 3.1.4 3.2
 # gpac         | mp4box          | 0.6.1
 # mp4v2        | mp4chaps        | 2.0.0
-# coreutils    | grealpath/gdate | 8.25
+# coreutils    | realpath/date | 8.25
 #
 # Usage
 # ./mp4.sh merge_as_chapter input*.mp4 output.mp4
@@ -76,7 +76,7 @@ add_chaptermark(){
     local input="$2"
     echo "chapterfile:" "$chapterfile"
 
-    mp4box -chap "$chapterfile" "$input" &&
+    MP4Box -chap "$chapterfile" "$input" &&
     mp4chaps --convert --chapter-qt "$input"
 }
 
@@ -96,7 +96,7 @@ create_chapterfile(){
         local chapter_number=$(printf "CHAPTER%s" "$i")
         local duration=$(duration "$file")
 
-        printf "%s=%s\n" "$chapter_number" $(gdate -d@"$chapter_start" -u +%T.%3N) | tee -a /tmp/create_chapterfile.log
+        printf "%s=%s\n" "$chapter_number" $(date -d@"$chapter_start" -u +%T.%3N) | tee -a /tmp/create_chapterfile.log
         printf "%sNAME=%s\n" "$chapter_number" "$chapter_name" | tee -a /tmp/create_chapterfile.log
 
         chapter_end=$(bc <<< "scale=6;$chapter_end+ $duration")
