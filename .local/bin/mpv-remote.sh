@@ -9,8 +9,6 @@
 # seek +20
 # seek -20
 
-echo "Enter command"
-command=$@
-echo "$command" | socat - $XDG_RUNTIME_DIR/mpv.socket
+echo "$@" | socat - $XDG_RUNTIME_DIR/mpv.socket
 
 
