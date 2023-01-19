@@ -289,3 +289,19 @@ function link2clip() {
 function link2imgur() {
     imgur $(readlink -f "$@")
 }
+
+# Download page recursive
+wget-recursive() wget \
+     --recursive \
+     -l 2 \
+     -A jpg,jpeg,png,gif \
+     -e robots=off \
+     --page-requisites \
+     --no-directories \
+     --html-extension \
+     --convert-links \
+     --restrict-file-names=windows \
+     --domains $1 \
+     --no-parent \
+     "$2"
+
