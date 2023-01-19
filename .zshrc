@@ -30,9 +30,6 @@ _comp_options+=(globdots)  # Include hidden files.
 # Enable conda
 [ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh
 
-# Enable direnv
-eval "$(direnv hook zsh)"
-
 # No validation (path checking), to ensure zsh files exist
 source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 
@@ -61,6 +58,9 @@ fi
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+
+# Enable direnv
+eval "$(direnv hook zsh)"
 
 # Disable Software Flow Control to use C-s and C-q in programs
 stty -ixon
