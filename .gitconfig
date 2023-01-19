@@ -111,7 +111,10 @@
 	set-upstream = !git branch --set-upstream-to=origin/`git symbolic-ref --short HEAD`
 
 	# Show the user email for the current repository.
-	whoami = config user.email
+    whoami = config user.email
+
+    # Set new repo url
+    set-orign = remote set-url origin
 
 [apply]
 	# Detect whitespace errors when applying a patch.
