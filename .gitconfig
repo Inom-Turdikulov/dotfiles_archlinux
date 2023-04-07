@@ -143,6 +143,7 @@
 	pager = diff-so-fancy | less --tabs=4 -RFX
 	quotePath = false
 	commitGraph = true
+	editor = nvim
 
 [color]
 	# Use colors in Git commands that are capable of colored output when
