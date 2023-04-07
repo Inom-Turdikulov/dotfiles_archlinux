@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# Fool protection
+# Do not do chown/chroot for root directory
+alias chown="chown --preserve-root"
+alias chmod="chmod --preserve-root"
+
 # Utilites
 alias cp="cp -i"                          # confirm before overwriting something
 alias df='df -h'                          # human-readable sizes
