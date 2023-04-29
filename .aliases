@@ -155,3 +155,31 @@ alias fix_concated_mp3='mp3val -f -nb'
 
 # Merge, split or and manipulate audiobook files with chapters
 alias m4b-tool-merge='docker run -it --rm -u $(id -u):$(id -g) -v "$(pwd)":/mnt sandreas/m4b-tool:latest merge -v --jobs=6 --output-file="output/" --batch-pattern="input/%g/%a/%n/" "input/"'
+
+# Ripgrep over epub files
+alias rga-epub='rga --rga-adapters=pandoc'
+
+# Inspect previous boot
+alias lastboot='journalctl -b -1 -n'
+
+# Connect to win10 machine
+alias vmconnect='virsh --connect qemu:///system start win10 & virt-viewer -c qemu:///system --attach -f win10'
+
+# Display images in the terminal
+alias icat="kitty +kitten icat"
+
+# Diff usikg kitty diff
+alias d="kitty +kitten diff"
+
+# Download images from current page using wget
+# -nd no create directories, -P prefix, -A accept, -r recursive, -l depth
+alias wget_images='wget -nd -r -l 1 -P . -A jpeg,jpg,bmp,gif,png'
+
+# Howdoi - stackoverflow from the terminal
+alias h='function hdi(){ howdoi $* -c -n 3|sed 's/================================================================================/=================================/g'|bat -p; }; hdi'
+
+# Update database and then run pikaur
+alias pikaur='pikaur -Sy && pikaur'
+
+# To get a list of the files you have selected in nnn one could create
+alias ncp="cat ${NNN_SEL:-${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.selection} | tr '\0' '\n'"
