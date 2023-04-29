@@ -278,7 +278,21 @@ function sync_with_ignore() {
     rsync -av --delete --exclude-from=.gitignore "$@"
 }
 
-audio-join() ffmpeg -i "concat:${(j:|:)@[2,-1]}" -acodec copy $1
+
+function get_local_projects() {
+  prj_path=$HOME/Projects
+  selected_dir=$(
+    find $prj_path/* -maxdepth 1 -mindepth 1 -type d |
+      sed "s~$prj_path/~~" |
+      fzf-tmux -p --cycle --layout=reverse --prompt 't> ' |
+      sed "s~^~$prj_path/~"
+  )
+
+  if test -n "$selected_dir"; then
+    tab_name=$(echo $selected_dir | sed "s~$prj_path/~~")
+    kitty @ focus-tab --match title:$tab_name 2>/dev/null || kitty @ new-window --new-tab --tab-title $tab_name --cwd $selected_dir
+  fi
+}
 
 # Copy path to file
 function link2clip() {
