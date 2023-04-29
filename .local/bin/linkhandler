@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Feed script a url or file location.
 
@@ -6,39 +6,57 @@ PDF_VIEWER=/usr/bin/zathura
 IMAGE_VIEWER=imv
 SVG_IMAGE_VIEWER="/usr/bin/inkview"
 MEDIA_VIEWER=mpv
-FALLBACK_BROWSER=firefox
+FALLBACK_BROWSER=$BROWSER
 
-if [ -z "$1" ]; then
-	url="$(xclip -o)"
+
+# Check "$@" has a protocol, if yes, open it in browser.
+if [[ "$@" == *://* ]]; then
+    # focus firefox if it's Open
+
+    if [[ "$1" = http* ]]; then
+        $FALLBACK_BROWSER "$@" >/dev/null 2>&1
+    else
+        xdg-open "$@" >/dev/null 2>&1
+    fi
+
 else
-	url="$1"
+    cd "~/Projects/main/wiki/books"
+    $FALLBACK_BROWSER "$@" >/dev/null 2>&1
+
+    # Check file exists, if yes, open it in browser.
+    if [ -f "~/Projects/main/wiki/books/$@" ]; then
+        # focus firefox if it's Open
+        $FALLBACK_BROWSER "file:///home/inom/Projects/main/wiki/books/$@" >/dev/null 2>&1
+    else
+        $FALLBACK_BROWSER "$@" >/dev/null 2>&1
+    fi
 fi
 
-case "$url" in
-    *files.slack.com\/files-pri*)
-		setsid -f "$FALLBACK_BROWSER" "$1" >/dev/null 2>&1 ;;
-    *twitch.tv\/*)
-		notify-send "Twitch stream $1"
-		playerctl -p $MEDIA_VIEWER pause
-		setsid -f $MEDIA_VIEWER --quiet "$1" >/dev/null 2>&1 ;;
-	*m3u8|*m3u8\?loc=nl|*mkv|*webm|*mp4|*youtube.com/watch*|*youtube.com/playlist*|*youtu.be*|*hooktube.com*|*bitchute.com*|*videos.lukesmith.xyz*|*odysee.com*)
-		notify-send "MPV $1"
-		playerctl -p $MEDIA_VIEWER pause
-		setsid -f $MEDIA_VIEWER --quiet "$1" >/dev/null 2>&1 ;;
-	*http*png|*http*jpg|*http*gif|*amuniversal.com*|*.jpg?width=*)
-	 	curl -sL "$1" > "/tmp/$(echo "$1" | sed "s/.*\///;s/%20/ /g")" && $IMAGE_VIEWER "/tmp/$(echo "$1" | sed "s/.*\///;s/%20/ /g")"  >/dev/null 2>&1 & ;;
-	*png|*jpg|*jpe|*jpeg|*gif|*amuniversal.com*|*.jpg?width=*)
-		$IMAGE_VIEWER "$@" 2>&1 & ;;
-	*svg|*ai|wmf)
-		curl -sL "$1" > "/tmp/$(echo "$1" | sed "s/.*\///;s/%20/ /g")" && $SVG_IMAGE_VIEWER "/tmp/$(echo "$1" | sed "s/.*\///;s/%20/ /g")"  >/dev/null 2>&1 & ;;
-	*pdf|*cbz|*cbr|*epub|*djvu)
-		curl -sL "$1" > "/tmp/$(echo "$1" | sed "s/.*\///;s/%20/ /g")" && $PDF_VIEWER "/tmp/$(echo "$1" | sed "s/.*\///;s/%20/ /g")"  >/dev/null 2>&1 & ;;
-	*mp3|*flac|*opus|*mp3?*)
-		#qndl "$1" 'curl -LO'  >/dev/null 2>&1 ;;
-		notify-send "Open $1"
-		playerctl -p $MEDIA_VIEWER play-pause
-		setsid -f $MEDIA_VIEWER --quiet "$1" >/dev/null 2>&1 ;;
-	*)
-		[ -f "$1" ] && setsid -f "$TERMINAL" -e "$EDITOR" "$1" >/dev/null 2>&1 || setsid -f "$FALLBACK_BROWSER" "$1" >/dev/null 2>&1
-esac
 
+# case "$@" in
+#     *twitch.tv\/*)
+# 		notify-send "Twitch stream $@"
+# 		playerctl -p $MEDIA_VIEWER pause
+# 		setsid -f $MEDIA_VIEWER --quiet "$@" >/dev/null 2>&1 ;;
+# 	*m3u8|*m3u8\?loc=nl|*mkv|*webm|*mp4|*youtube.com/watch*|*youtube.com/playlist*|*youtu.be*|*hooktube.com*|*bitchute.com*|*videos.lukesmith.xyz*|*odysee.com*)
+# 		notify-send "MPV $@"
+# 		playerctl -p $MEDIA_VIEWER pause
+# 		setsid -f $MEDIA_VIEWER --quiet "$@" >/dev/null 2>&1 ;;
+# 	*http*png|*http*jpg|*http*gif|*amuniversal.com*|*.jpg?width=*)
+# 	 	curl -sL "$@" > "/tmp/$(echo "$1" | sed "s/.*\///;s/%20/ /g")" && $IMAGE_VIEWER "/tmp/$(echo "$1" | sed "s/.*\///;s/%20/ /g")"  >/dev/null 2>&1 & ;;
+# 	*png|*jpg|*jpe|*jpeg|*gif|*amuniversal.com*|*.jpg?width=*)
+# 		$IMAGE_VIEWER "$@" 2>&1 & ;;
+# 	*svg|*ai|wmf)
+# 		curl -sL "$@" > "/tmp/$(echo "$1" | sed "s/.*\///;s/%20/ /g")" && $SVG_IMAGE_VIEWER "/tmp/$(echo "$1" | sed "s/.*\///;s/%20/ /g")"  >/dev/null 2>&1 & ;;
+# 	*pdf|*cbz|*cbr|*epub|*djvu)
+# 		curl -sL "$@" > "/tmp/$(echo "$1" | sed "s/.*\///;s/%20/ /g")" && $PDF_VIEWER "/tmp/$(echo "$1" | sed "s/.*\///;s/%20/ /g")"  >/dev/null 2>&1 & ;;
+# 	*mp3|*flac|*opus|*mp3?*)
+# 		#qndl "$@" 'curl -LO'  >/dev/null 2>&1 ;;
+# 		notify-send "Open $@"
+# 		playerctl -p $MEDIA_VIEWER play-pause
+# 		setsid -f $MEDIA_VIEWER --quiet "$@" >/dev/null 2>&1 ;;
+#     *http*)
+#         firefox "$@" >/dev/null 2>&1 ;;
+# 		[ -f "$@" ] && setsid -f "$TERMINAL" -e "$EDITOR" "$1" >/dev/null 2>&1 || setsid -f "$FALLBACK_BROWSER" "$1" >/dev/null 2>&1
+# esac
+#
