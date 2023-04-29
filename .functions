@@ -319,3 +319,29 @@ wget-recursive() wget \
      --no-parent \
      "$2"
 
+
+audio-join() {
+    ffmpeg -i "concat:${(j:|:)@[2,-1]}" -acodec copy $1
+}
+
+# Upload clipboard to imgur
+imgur-xclip() {
+    xclip -selection c -o | imgur && icat $(xclip -selection c -o)
+}
+
+# Check if 'venv' directory exists and activate it or create a new one
+python-venv() {
+    if [ -d "venv" ]
+    then
+        echo "Activating existing virtual environment..."
+        source venv/bin/activate
+        which python
+    else
+        echo "Creating new virtual environment..."
+        # Create a new virtual environment named 'venv'
+        python3 -m venv venv
+        # Activate the virtual environment
+        source venv/bin/activate
+        which python
+    fi
+}
