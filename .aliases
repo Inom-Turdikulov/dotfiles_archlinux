@@ -133,7 +133,7 @@ alias slideshow="mvi --image-display-duration=5 --loop-file=no"
 alias djvu2pdf='docker run --rm -u $(id -u):$(id -g) -v $(pwd):/opt/work ilyabystrov/djvu2pdf'
 
 # Rename all files
-alias rename_all_numbers=ls -v | cat -n | while read n f; do mv -n "$f" "$n.ext"; done
+alias rename_all_numbers='ls -v | cat -n | while read n f; do mv -n "$f" "$n.ext"; done'
 
 # Taskwarrior
 alias in='task add +in'
