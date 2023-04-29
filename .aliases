@@ -20,6 +20,7 @@ alias E="SUDO_EDITOR=nvim sudo -e"
 # Python aliases
 alias py="python3"
 alias py2="python2"
+alias unittest="python3 -m unittest"
 
 # Easier navigation: .., ..., ...., ....., ~ and -
 alias ..="cd .."
@@ -33,8 +34,6 @@ alias doc="cd ~/Documents"
 alias dwn="cd ~/Downloads"
 alias des="cd ~/Desktop"
 alias prj="cd ~/Projects"
-alias vi="nvim"
-alias vim="nvim"
 alias g='git'
 alias gc="git checkout"
 alias gp="git push"
@@ -117,6 +116,9 @@ alias koreader_umount='umount ~/public/koreader'
 
 alias fzf_history='cat ~/.cache/ytfzf/watch_hist | jq  ".[].title,.[].url"|tail -n 20'
 alias weather='curl -s "wttr.in/$(pass location)"'
+
+# Check my public IP address
+alias myip="curl -s https://checkip.amazonaws.com"
 
 # Grep data from temp sensors
 alias systemperatures='sudo hddtemp /dev/disk/by-id/*ata*part1; sudo sensors'
