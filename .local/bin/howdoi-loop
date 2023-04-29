@@ -9,15 +9,16 @@ trap '' SIGTSTP
 
 export HOWDOI_COLORIZE=1
 export HOWDOI_SEARCH_ENGINE=google
+program="tgpt"
 
-# display message and pause 
+# display message and pause
 pause(){
 	local m="$@"
 	echo "$m"
 	read -p "Press [Enter] key to continue..." key
 }
- 
-# set an 
+
+# set an
 while :
 do
 	# show menu
@@ -25,6 +26,6 @@ do
 	# take action
 	case $c in
 		q) break;;
-		*) howdoi -a "$c" 2>&1|less -r;;
+		*) $program "$c";;
 	esac
 done
