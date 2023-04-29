@@ -7,7 +7,7 @@ export GPG_TTY=$(tty)
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
-for file in ~/.{profile,aliases,functions}; do
+for file in ~/.{profile,profile-keys,aliases,functions}; do
 	[ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
 unset file;
@@ -15,20 +15,8 @@ unset file;
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 HISTSIZE=10000000
 SAVEHIST=10000000
+
 setopt autocd beep extendedglob nomatch notify appendhistory interactive_comments
-bindkey -e
-
-
-# Basic auto/tab complete:
-autoload -U compinit
-zstyle ':completion:*' menu select
-zmodload zsh/complist
-compinit
-_comp_options+=(globdots)  # Include hidden files.
-
-
-# Enable conda
-[ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh
 
 # No validation (path checking), to ensure zsh files exist
 source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
@@ -43,13 +31,10 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-if [[ -r "/usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh" ]]; then
-  source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
-  function zvm_after_init() {
-    source /usr/share/fzf/key-bindings.zsh
-    source /usr/share/fzf/completion.zsh
-  }
-fi
+# Key bindings
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
+bindkey -e # Enable emacs key bindings
 
 if [[ -r "$HOME/.local/share/zsh-toggle-command-prefix/toggle-command-prefix.zsh" ]]; then
   source "$HOME/.local/share/zsh-toggle-command-prefix/toggle-command-prefix.zsh"
@@ -63,4 +48,17 @@ eval "$(pyenv init -)"
 eval "$(direnv hook zsh)"
 
 # Disable Software Flow Control to use C-s and C-q in programs
-stty -ixon
+stty start undef
+stty stop undef
+
+# NNN cd on exit, and run the n command instead of nnn
+# (more precisely the n function).
+if [ -f /usr/share/nnn/quitcd/quitcd.bash_zsh ]; then
+    source /usr/share/nnn/quitcd/quitcd.bash_zsh
+fi
+
+# Enable zsh-autocomplete
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
+# bind accept
+bindkey '^y' autosuggest-accept
