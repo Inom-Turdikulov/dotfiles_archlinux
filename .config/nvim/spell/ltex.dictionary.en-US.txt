@@ -209,3 +209,4 @@ Ventoy
 WinPE
 ChromeOS
 Xen
+yadm

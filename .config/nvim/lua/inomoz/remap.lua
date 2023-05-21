@@ -89,11 +89,22 @@ vim.keymap.set("n", "<S-M-Del>", "<cmd>call delete(expand('%:p')) | bdelete! %<C
 -- search build.sh file in current directory and parent directories
 local function search_build_sh_recursively(path)
     local build_sh = path .. "/build.sh"
+    local build_bat = path .. "/build.bat"
+
     if vim.fn.filereadable(build_sh) == 1 then
         return build_sh
+    elseif vim.fn.filereadable(build_bat) == 1 then
+        return build_bat
     end
+
     -- if path included "Projects" then stop searching
     local projects = vim.fn.expand("~/Projects")
+
+    -- if windows platform use different path
+    if vim.fn.has("win32") == 1 then
+        projects = vim.fn.expand("/w")
+    end
+
     if vim.fn.fnamemodify(path, ":h") == projects then
         return nil
     end
@@ -115,12 +126,12 @@ vim.keymap.set("n", "<Leader>bh", function()
         end
 
         -- run build.sh and if it exits with code 0 then run nvim-dap debugger
-        vim.cmd("silent !bash " .. build_sh)
+        vim.cmd("silent !" .. build_sh)
         -- if vim.v.shell_error == 0 then
         --     vim.cmd("lua require('dap').continue()")
         -- end
     else
-        print("build.sh not found")
+        print("builder not found")
     end
 end)
 
