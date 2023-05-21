@@ -71,9 +71,6 @@ return require('packer').startup(function(use)
     -- Editor config support
     use('gpanders/editorconfig.nvim')
 
-    -- Soft/hard wrap modes
-    use { 'andrewferrier/wrapping.nvim' }
-
     -- Commenting plugin
     use {
         'numToStr/Comment.nvim',
@@ -104,6 +101,9 @@ return require('packer').startup(function(use)
     -- ===============================
     local os_name = vim.loop.os_uname().sysname
     if os_name == 'Linux' then
+        -- Soft/hard wrap modes
+        use { 'andrewferrier/wrapping.nvim' }
+
         -- Frequency based sorting
         use {
             "nvim-telescope/telescope-frecency.nvim",
