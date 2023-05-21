@@ -20,7 +20,10 @@ function PackerPluginLoaded(name)
     if packer_plugins[name] and packer_plugins[name].loaded then
         return true
     else
-        print("WARNING: plugin " .. name .. " is not loaded")
+        if vim.loop.os_uname().sysname == 'Linux' then
+            print("WARNING: plugin " .. name .. " is not loaded")
+        end
+
         return false
     end
 end

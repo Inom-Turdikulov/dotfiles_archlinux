@@ -6,7 +6,7 @@ if PackerPluginLoaded("nvim-treesitter") and PackerPluginLoaded("nvim-treesitter
             "c", "lua", "vim",
             "help", "rust", "java",
             "css", "html", "go",
-            "ruby", "bash"
+            "bash"
         },
 
         -- Install parsers synchronously (only applied to `ensure_installed`)

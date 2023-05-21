@@ -4,7 +4,6 @@
 vim.cmd.packadd('packer.nvim')
 
 return require('packer').startup(function(use)
-    local os_name = vim.loop.os_uname().sysname
     -- Universal plugins, with minimum requirements
     -- ===============================
 
@@ -103,6 +102,7 @@ return require('packer').startup(function(use)
 
     -- Linux (my main OS) specific plugins
     -- ===============================
+    local os_name = vim.loop.os_uname().sysname
     if os_name == 'Linux' then
         -- Frequency based sorting
         use {
