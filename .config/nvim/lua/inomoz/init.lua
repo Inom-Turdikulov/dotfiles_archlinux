@@ -1,14 +1,28 @@
+require("inomoz.packer")
 require("inomoz.set")
 require("inomoz.remap")
+require("inomoz.zathura")
 
 local augroup = vim.api.nvim_create_augroup
 local InomozGroup = augroup('Inomoz', {})
+local InomozViewGroup = augroup('InomozView', {})
 
 local autocmd = vim.api.nvim_create_autocmd
 local yank_group = augroup('HighlightYank', {})
 
+
 function R(name)
     require("plenary.reload").reload_module(name)
+end
+
+function PackerPluginLoaded(name)
+    -- log plugin name
+    if packer_plugins[name] and packer_plugins[name].loaded then
+        return true
+    else
+        print("WARNING: plugin " .. name .. " is not loaded")
+        return false
+    end
 end
 
 autocmd('TextYankPost', {
@@ -28,6 +42,11 @@ autocmd({ "BufWritePre" }, {
     command = [[%s/\s\+$//e]],
 })
 
-vim.g.netrw_browse_split = 0
-vim.g.netrw_banner = 0
-vim.g.netrw_winsize = 25
+autocmd({ "BufRead" }, {
+    group = InomozViewGroup,
+    pattern = "*",
+    callback = function()
+        vim.wo.listchars = GLOBAL_LISTCHARS
+    end,
+})
+
