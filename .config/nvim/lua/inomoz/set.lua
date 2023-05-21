@@ -72,6 +72,11 @@ vim.opt.title = true
 vim.opt.titlestring = "%{expand('%:p:h:t')}"
 vim.g.markdown_folding = 1 -- enable markdown folding
 
+-- if windows set specific options, fix shell in msys2 (windows)
+if vim.fn.has('win32') == 1 then
+    vim.opt.shellcmdflag = "-c"
+end
+
 vim.cmd([[
 " Auto save view files
 autocmd BufWrite * mkview
