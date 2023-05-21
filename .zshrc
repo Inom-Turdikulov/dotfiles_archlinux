@@ -1,3 +1,8 @@
+exists()
+{
+  command -v "$1" >/dev/null 2>&1
+}
+
 autoload -U colors && colors	# Load colors
 
 # Set GPG TTY
@@ -8,18 +13,26 @@ export GPG_TTY=$(tty)
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
 for file in ~/.{profile,profile-keys,aliases,functions}; do
-	[ -r "$file" ] && [ -f "$file" ] && source "$file";
+    [ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
 unset file;
+
+# Set basic configs
+setopt autocd beep extendedglob nomatch notify appendhistory interactive_comments
 
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 HISTSIZE=10000000
 SAVEHIST=10000000
 
-setopt autocd beep extendedglob nomatch notify appendhistory interactive_comments
+# bind keys
+bindkey -e # Enable emacs key bindings
+bindkey '^y' autosuggest-accept
 
 # No validation (path checking), to ensure zsh files exist
-source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+POWER_LEVEL_THEME=/usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+if [[ -f $POWER_LEVEL_THEME ]]; then
+    source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -32,20 +45,25 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # Key bindings
-source /usr/share/fzf/key-bindings.zsh
-source /usr/share/fzf/completion.zsh
-bindkey -e # Enable emacs key bindings
+FZF_KEYBINDIGS=/usr/share/fzf/key-bindings.zsh
+FZF_COMPLETION=/usr/share/fzf/completion.zsh
+[[ ! -f $FZF_KEYBINDIGS ]] || source $FZF_KEYBINDIGS
+[[ ! -f $FZF_COMPLETION ]] || source $FZF_COMPLETION
 
 if [[ -r "$HOME/.local/share/zsh-toggle-command-prefix/toggle-command-prefix.zsh" ]]; then
   source "$HOME/.local/share/zsh-toggle-command-prefix/toggle-command-prefix.zsh"
 fi
 
 export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+if [[ -d $PYENV_ROOT ]]; then
+    command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+fi
 
 # Enable direnv
-eval "$(direnv hook zsh)"
+if exists direnv; then
+    eval "$(direnv hook zsh)"
+fi
 
 # Disable Software Flow Control to use C-s and C-q in programs
 stty start undef
@@ -58,7 +76,10 @@ if [ -f /usr/share/nnn/quitcd/quitcd.bash_zsh ]; then
 fi
 
 # Enable zsh-autocomplete
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
-# bind accept
-bindkey '^y' autosuggest-accept
+ZSH_AUTOCOMPLETE_PATH=/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+if [[ -f $ZSH_AUTOCOMPLETE_PATH ]]; then
+    source $ZSH_AUTOCOMPLETE_PATH
+    ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
+else
+    echo "zsh-autocomplete not found"
+fi
