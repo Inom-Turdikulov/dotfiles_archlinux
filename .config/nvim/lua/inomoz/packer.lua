@@ -4,6 +4,10 @@
 vim.cmd.packadd('packer.nvim')
 
 return require('packer').startup(function(use)
+    local os_name = vim.loop.os_uname().sysname
+    -- Universal plugins, with minimum requirements
+    -- ===============================
+
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
 
@@ -17,22 +21,10 @@ return require('packer').startup(function(use)
         requires = { { 'nvim-lua/plenary.nvim' } }
     }
 
-    -- Frequency based sorting
-    use {
-        "nvim-telescope/telescope-frecency.nvim",
-        requires = { "kkharji/sqlite.lua" }
-    }
-
     -- File browser
     use {
         "nvim-telescope/telescope-file-browser.nvim",
         requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
-    }
-
-    -- Image preview
-    use {
-        "nvim-telescope/telescope-media-files.nvim",
-        requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim", "nvim-lua/popup.nvim" }
     }
 
     -- A dark Vim/Neovim color scheme for the GUI and 16/256/true-color terminal
@@ -71,81 +63,8 @@ return require('packer').startup(function(use)
         -- tag = 'release' -- To use the latest release (do not use this if you run Neovim nightly or dev builds!)
     }
 
-    -- LSP
-    use {
-        'VonHeikemen/lsp-zero.nvim',
-        requires = {
-            -- LSP Support
-            { 'neovim/nvim-lspconfig' },
-            { 'williamboman/mason.nvim' },
-            { 'williamboman/mason-lspconfig.nvim' },
-
-            -- Autocompletion
-            { 'hrsh7th/nvim-cmp' },
-            { 'hrsh7th/cmp-buffer' },
-            { 'hrsh7th/cmp-path' },
-            { 'saadparwaiz1/cmp_luasnip' },
-            { 'hrsh7th/cmp-nvim-lsp' },
-            { 'hrsh7th/cmp-nvim-lua' },
-
-            -- Snippets
-            { 'L3MON4D3/LuaSnip' },
-            { 'rafamadriz/friendly-snippets' },
-        }
-    }
-
-    -- Diagnostic
-    use({
-        "folke/trouble.nvim",
-        config = function()
-            require("trouble").setup {
-                icons = false,
-                -- your configuration comes here
-                -- or leave it empty to use the default settings
-                -- refer to the configuration section below
-            }
-        end
-    })
-
     -- Distraction-free coding
     use("folke/zen-mode.nvim")
-
-    -- OpenAI Codex to suggest code and entire functions
-    use("github/copilot.vim")
-
-    -- OpenAI's GPT-3 language model
-    use({
-        "jackMort/ChatGPT.nvim",
-        requires = {
-            "MunifTanjim/nui.nvim",
-            "nvim-lua/plenary.nvim",
-            "nvim-telescope/telescope.nvim"
-        }
-    })
-
-    -- Fun and useless animations
-    use("eandrju/cellular-automaton.nvim")
-
-    -- Debugging
-    use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
-    use {
-        'mfussenegger/nvim-dap-python',
-        requires = { { 'mfussenegger/nvim-dap' } }
-    }
-    use { "mxsdev/nvim-dap-vscode-js", -- js debugging
-        requires = { "mfussenegger/nvim-dap" }
-    }
-
-    -- Testing
-    use {
-        "nvim-neotest/neotest",
-        requires = {
-            "nvim-neotest/neotest-python",
-            "nvim-lua/plenary.nvim",
-            "nvim-treesitter/nvim-treesitter",
-            "antoinemadec/FixCursorHold.nvim"
-        }
-    }
 
     -- Local vimrc support
     use('klen/nvim-config-local')
@@ -153,24 +72,8 @@ return require('packer').startup(function(use)
     -- Editor config support
     use('gpanders/editorconfig.nvim')
 
-    -- Telekasten - zettelkasten wiki
-    use('renerocksai/telekasten.nvim')
-
-    -- Obsidian integration
-    use('epwalsh/obsidian.nvim')
-
-    -- Markdown preview
-    use({ 'toppair/peek.nvim', run = 'deno task --quiet build:fast' })
-
     -- Soft/hard wrap modes
     use { 'andrewferrier/wrapping.nvim' }
-
-    -- Bibtex integration
-    use { "nvim-telescope/telescope-bibtex.nvim",
-        requires = {
-            { 'nvim-telescope/telescope.nvim' },
-        },
-    }
 
     -- Commenting plugin
     use {
@@ -183,35 +86,10 @@ return require('packer').startup(function(use)
         requires = "nvim-lua/plenary.nvim",
     }
 
-    -- Execute code blocks in markdown
-    use { "michaelb/sniprun", run = "bash install.sh" }
-
-    -- Jupyter notebook integration
-    use { 'dccsillag/magma-nvim', run = ':UpdateRemotePlugins' }
-
-    -- Transaltion
-    use("uga-rosa/translate.nvim")
-
-    -- Calendar
-    use("mattn/calendar-vim")
-
     -- Shortcuts helper
     use {
         "folke/which-key.nvim"
     }
-
-    -- Image viewer
-    use("edluffy/hologram.nvim")
-
-    -- Fix ltex (lsp spell checker) issuse
-    use { "barreiroleo/ltex-extra.nvim" }
-
-    -- External documentation using zeal
-    use("KabbAmine/zeavim.vim")
-
-    -- interacting with databases
-    use { "tpope/vim-dadbod" }
-    use { "kristijanhusak/vim-dadbod-ui" }
 
     -- Surrond objects
     use({
@@ -219,16 +97,147 @@ return require('packer').startup(function(use)
         tag = "*", -- Use for stability; omit to use `main` branch for the latest features
     })
 
-    -- Refactoring
-    use({
-        'python-rope/ropevim',
-        ft = "python"
-    })
-
     -- Statusline
     use { "tjdevries/express_line.nvim" }
 
-    -- jinja2 support
-    use { "Glench/Vim-Jinja2-Syntax" }
-end)
 
+    -- Linux (my main OS) specific plugins
+    -- ===============================
+    if os_name == 'Linux' then
+        -- Frequency based sorting
+        use {
+            "nvim-telescope/telescope-frecency.nvim",
+            requires = { "kkharji/sqlite.lua" }
+        }
+
+        -- Image preview
+        use {
+            "nvim-telescope/telescope-media-files.nvim",
+            requires = { "nvim-telescope/telescope.nvim",
+                "nvim-lua/plenary.nvim", "nvim-lua/popup.nvim" }
+        }
+
+        -- LSP
+        use {
+            'VonHeikemen/lsp-zero.nvim',
+            requires = {
+                -- LSP Support
+                { 'neovim/nvim-lspconfig' },
+                { 'williamboman/mason.nvim' },
+                { 'williamboman/mason-lspconfig.nvim' },
+
+                -- Autocompletion
+                { 'hrsh7th/nvim-cmp' },
+                { 'hrsh7th/cmp-buffer' },
+                { 'hrsh7th/cmp-path' },
+                { 'saadparwaiz1/cmp_luasnip' },
+                { 'hrsh7th/cmp-nvim-lsp' },
+                { 'hrsh7th/cmp-nvim-lua' },
+
+                -- Snippets
+                { 'L3MON4D3/LuaSnip' },
+                { 'rafamadriz/friendly-snippets' },
+            }
+        }
+
+        -- Diagnostic
+        use({
+            "folke/trouble.nvim",
+            config = function()
+                require("trouble").setup {
+                    icons = false,
+                    -- your configuration comes here
+                    -- or leave it empty to use the default settings
+                    -- refer to the configuration section below
+                }
+            end
+        })
+
+        -- OpenAI Codex to suggest code and entire functions
+        use("github/copilot.vim")
+
+        -- OpenAI's GPT-3 language model
+        use({
+            "jackMort/ChatGPT.nvim",
+            requires = {
+                "MunifTanjim/nui.nvim",
+                "nvim-lua/plenary.nvim",
+                "nvim-telescope/telescope.nvim"
+            }
+        })
+
+        -- Fun and useless animations
+        use("eandrju/cellular-automaton.nvim")
+
+        -- Debugging
+        use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
+        use {
+            'mfussenegger/nvim-dap-python',
+            requires = { { 'mfussenegger/nvim-dap' } }
+        }
+        use { "mxsdev/nvim-dap-vscode-js", -- js debugging
+            requires = { "mfussenegger/nvim-dap" }
+        }
+
+        -- Testing
+        use {
+            "nvim-neotest/neotest",
+            requires = {
+                "nvim-neotest/neotest-python",
+                "nvim-lua/plenary.nvim",
+                "nvim-treesitter/nvim-treesitter",
+                "antoinemadec/FixCursorHold.nvim"
+            }
+        }
+
+        -- Telekasten - zettelkasten wiki
+        use('renerocksai/telekasten.nvim')
+
+        -- Obsidian integration
+        use('epwalsh/obsidian.nvim')
+
+        -- Markdown preview
+        use({ 'toppair/peek.nvim', run = 'deno task --quiet build:fast' })
+
+        -- Bibtex integration
+        use { "nvim-telescope/telescope-bibtex.nvim",
+            requires = {
+                { 'nvim-telescope/telescope.nvim' },
+            },
+        }
+
+        -- Execute code blocks in markdown
+        use { "michaelb/sniprun", run = "bash install.sh" }
+
+        -- Jupyter notebook integration
+        use { 'dccsillag/magma-nvim', run = ':UpdateRemotePlugins' }
+
+        -- Transaltion
+        use("uga-rosa/translate.nvim")
+
+        -- Calendar
+        use("mattn/calendar-vim")
+
+        -- Image viewer
+        use("edluffy/hologram.nvim")
+
+        -- Fix ltex (lsp spell checker) issuse
+        use { "barreiroleo/ltex-extra.nvim" }
+
+        -- External documentation using zeal
+        use("KabbAmine/zeavim.vim")
+
+        -- interacting with databases
+        use { "tpope/vim-dadbod" }
+        use { "kristijanhusak/vim-dadbod-ui" }
+
+        -- Refactoring
+        use({
+            'python-rope/ropevim',
+            ft = "python"
+        })
+
+        -- jinja2 support
+        use { "Glench/Vim-Jinja2-Syntax" }
+    end
+end)

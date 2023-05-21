@@ -14,12 +14,6 @@ if PackerPluginLoaded("telescope.nvim") then
         builtin.builtin()
     end, { noremap = true, silent = true }, { desc = 'Telescope builtins' })
 
-    vim.keymap.set("n", "<leader><leader>", function()
-        switch_to_first_window()
-        require "telescope".extensions.frecency.frecency()
-    end, { noremap = true, silent = true }, { desc = 'Frecency' })
-
-
     vim.keymap.set({ "n", "v", "i" }, '<C-S-p>', function()
         switch_to_first_window()
         builtin.find_files()
@@ -106,19 +100,30 @@ if PackerPluginLoaded("telescope.nvim") then
         },
     }
 
-    -- Load extensions
-    require("telescope").load_extension("file_browser")
-    require('telescope').load_extension('media_files')
+    if PackerPluginLoaded("telescope-frecency.nvim") then
+        vim.keymap.set("n", "<leader><leader>", function()
+            switch_to_first_window()
+            require "telescope".extensions.frecency.frecency()
+        end, { noremap = true, silent = true }, { desc = 'Frecency' })
+    end
 
-    vim.keymap.set("n", "<leader>pV", function()
-        require("telescope").extensions.file_browser.file_browser()
-    end, {})
 
-    -- open file_browser with the path of the current buffer
-    vim.keymap.set("n", "<leader>pv", function()
-        require("telescope").extensions.file_browser.file_browser({
-            path = vim.fn.expand("%:p:h"),
-            select_buffer = true,
-        })
-    end, {})
+    if PackerPluginLoaded("telescope-file-browser.nvim") then
+        require("telescope").load_extension("file_browser")
+        vim.keymap.set("n", "<leader>pV", function()
+            require("telescope").extensions.file_browser.file_browser()
+        end, {})
+
+        -- open file_browser with the path of the current buffer
+        vim.keymap.set("n", "<leader>pv", function()
+            require("telescope").extensions.file_browser.file_browser({
+                path = vim.fn.expand("%:p:h"),
+                select_buffer = true,
+            })
+        end, {})
+    end
+
+    if PackerPluginLoaded("telescope-media-files.nvim") then
+        require('telescope').load_extension('media_files')
+    end
 end

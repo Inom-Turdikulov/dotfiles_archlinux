@@ -1,3 +1,4 @@
+if PackerPluginLoaded("translate.nvim") then
 vim.cmd([[
 nnoremap <space>tre :<C-u>Translate RU -output=floating<CR>
 xnoremap <space>tre :Translate RU -output=floating<CR>
@@ -17,3 +18,4 @@ xnoremap <space>tei :Translate EN -output=insert<CR>
 nnoremap <space>ter :<C-u>Translate EN -output=replace<CR>
 xnoremap <space>ter :Translate EN -output=replace<CR>
 ]])
+end
