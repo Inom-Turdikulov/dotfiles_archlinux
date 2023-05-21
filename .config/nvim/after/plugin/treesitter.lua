@@ -4,7 +4,7 @@ if PackerPluginLoaded("nvim-treesitter") and PackerPluginLoaded("nvim-treesitter
         ensure_installed = {
             "python", "javascript", "typescript",
             "c", "lua", "vim",
-            "help", "rust", "java",
+            "rust", "java",
             "css", "html", "go",
             "bash"
         },
