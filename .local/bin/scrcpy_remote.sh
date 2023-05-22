@@ -6,7 +6,9 @@ export w=$(xdotool getactivewindow)
 xdotool search --onlyvisible --class $APP windowactivate
 sleep 0.2
 
-if [[ $MODE = "down" ]]; then
+if [[ $MODE = "play-pause" ]]; then
+    xdotool key space
+elif [[ $MODE = "down" ]]; then
     for i in {1..5}; do
         xdotool key Down
     done
