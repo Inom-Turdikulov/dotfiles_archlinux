@@ -1,11 +1,19 @@
 #!/usr/bin/env bash
+
+AUTOREMOTE_KEY=$(pass show autoremote_key)
+AUTOREMOTE_URL="https://autoremotejoaomgcd.appspot.com/sendmessage"
+TASKER_DND_URL_ON="$AUTOREMOTE_URL?key=$AUTOREMOTE_KEY&message=dnd_on&ttl=10"
+TASKER_DND_URL_OFF="$AUTOREMOTE_URL?key=$AUTOREMOTE_KEY&message=dnd_off&ttl=10"
+
 case `dunstctl is-paused` in
     true)
 	rm -f /tmp/dnd.lock
         dunstctl set-paused false
+        curl -s "$TASKER_DND_URL_OFF" > /dev/null
         ;;
     false)
 	touch /tmp/dnd.lock
         (dunstctl close && dunstctl set-paused true) &
+        curl -s "$TASKER_DND_URL_ON" > /dev/null
         ;;
 esac
