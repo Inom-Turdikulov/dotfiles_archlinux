@@ -29,6 +29,7 @@ bindkey -e # Enable emacs key bindings
 bindkey '^y' autosuggest-accept
 
 # No validation (path checking), to ensure zsh files exist
+# manual install (not recommended) git clone --depth=1 https://github.com/romkatv/powerlevel10k.git /usr/share/zsh-theme-powerlevel10k
 POWER_LEVEL_THEME=/usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 if [[ -f $POWER_LEVEL_THEME ]]; then
     source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
@@ -76,10 +77,17 @@ if [ -f /usr/share/nnn/quitcd/quitcd.bash_zsh ]; then
 fi
 
 # Enable zsh-autocomplete
+# manual install (not recommended)
+# git clone https://github.com/zsh-users/zsh-autosuggestions /usr/share/zsh/plugins/zsh-autosuggestions
 ZSH_AUTOCOMPLETE_PATH=/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 if [[ -f $ZSH_AUTOCOMPLETE_PATH ]]; then
     source $ZSH_AUTOCOMPLETE_PATH
     ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
 else
     echo "zsh-autocomplete not found"
+fi
+
+START_DIR="$HOME/Projects/main/wiki/"
+if [[ -d $START_DIR ]]; then
+    cd $START_DIR
 fi
