@@ -8,7 +8,6 @@ TODO
 surfingkeys
 SurfingKeys
 qmk
-AOSR
 use dmenu
 Taskwarrior
 SnipRun
@@ -42,9 +41,7 @@ netrw
 telekasten
 nvim
 VimGolf
-@EmelinAleksandrKratchayshiyKursShkolnoy
 unstaged
-CLI~~
 Zettel
 Hyperextensible
 Miniflux
@@ -210,3 +207,4 @@ WinPE
 ChromeOS
 Xen
 yadm
+PyCharm
