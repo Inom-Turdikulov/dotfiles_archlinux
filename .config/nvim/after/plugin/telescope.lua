@@ -14,11 +14,6 @@ if PackerPluginLoaded("telescope.nvim") then
         builtin.builtin()
     end, { noremap = true, silent = true }, { desc = 'Telescope builtins' })
 
-    vim.keymap.set({ "n", "v", "i" }, '<C-S-p>', function()
-        switch_to_first_window()
-        builtin.find_files()
-    end, {})
-
     vim.keymap.set('n', '<leader>fs', function()
         switch_to_first_window()
         builtin.grep_string({ search = vim.fn.input("Grep > ") });
@@ -37,12 +32,12 @@ if PackerPluginLoaded("telescope.nvim") then
     vim.keymap.set('n', '<leader>fc', builtin.command_history,
     { desc = 'Command history' })
 
-    vim.keymap.set('n', '<C-p>', function()
+    vim.keymap.set({ "n", "v", "i" }, '<C-S-p>', function()
         if vim.fn.filereadable('.git/HEAD') == 1 then
             switch_to_first_window()
             builtin.git_files()
         else
-            print('Not in a git repository')
+            builtin.find_files()
         end
     end, {})
 
