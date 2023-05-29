@@ -23,7 +23,7 @@ return require('packer').startup(function(use)
     -- File browser
     use {
         "nvim-telescope/telescope-file-browser.nvim",
-        requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+        requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons" }
     }
 
     -- A dark Vim/Neovim color scheme for the GUI and 16/256/true-color terminal
@@ -119,6 +119,9 @@ return require('packer').startup(function(use)
         }
     }
 
+    -- OpenAI Codex to suggest code and entire functions
+    use("github/copilot.vim")
+
     -- Linux (my main OS) specific plugins
     -- ===============================
     local os_name = vim.loop.os_uname().sysname
@@ -151,9 +154,6 @@ return require('packer').startup(function(use)
                 }
             end
         })
-
-        -- OpenAI Codex to suggest code and entire functions
-        use("github/copilot.vim")
 
         -- OpenAI's GPT-3 language model
         use({

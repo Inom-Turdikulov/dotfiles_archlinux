@@ -8,11 +8,11 @@ if PackerPluginLoaded("lsp-zero.nvim") then
         "tsserver",
         "rust_analyzer",
         "pyright",
-        "clangd",
     }
 
     if os_name == 'Linux' then
         vim.list_extend(basic_requirements, {
+            "clangd",
             "ltex",
             -- from vscode-langservers-extracted
             "cssls",
