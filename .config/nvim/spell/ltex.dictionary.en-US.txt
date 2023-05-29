@@ -208,3 +208,15 @@ ChromeOS
 Xen
 yadm
 PyCharm
+Zathura
+vimium
+inputbar
+quickmark
+PhotoPrism
+Kiwix
+Audioserve
+Komga
+Syncthing
+qBittorent
+PrivateBin
+Drawabox

@@ -32,6 +32,10 @@ if PackerPluginLoaded("telekasten.nvim") then
     function() require('telekasten').goto_thisweek({ journal_auto_open = true }) end,
     { desc = "Goto this week" })
 
+    vim.keymap.set("n", "<leader>zW",
+        function() require('telekasten').weekly() end,
+        { desc = "Find weekly notes" })
+
     vim.keymap.set("n", "<leader>zn",
     function() require('telekasten').new_note() end, { desc = "Create new note" })
     vim.keymap.set("n", "<leader>zN",
