@@ -122,6 +122,9 @@ return require('packer').startup(function(use)
     -- OpenAI Codex to suggest code and entire functions
     use("github/copilot.vim")
 
+    -- External documentation using zeal
+    use("KabbAmine/zeavim.vim")
+
     -- Linux (my main OS) specific plugins
     -- ===============================
     local os_name = vim.loop.os_uname().sysname
@@ -222,9 +225,6 @@ return require('packer').startup(function(use)
 
         -- Fix ltex (lsp spell checker) issuse
         use { "barreiroleo/ltex-extra.nvim" }
-
-        -- External documentation using zeal
-        use("KabbAmine/zeavim.vim")
 
         -- interacting with databases
         use { "tpope/vim-dadbod" }
