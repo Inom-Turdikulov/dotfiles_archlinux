@@ -3,19 +3,27 @@ if PackerPluginLoaded("lsp-zero.nvim") then
 
     lsp.preset("recommended")
 
-    lsp.ensure_installed({
+    local os_name = vim.loop.os_uname().sysname
+    local basic_requirements = {
         "tsserver",
         "rust_analyzer",
         "pyright",
         "clangd",
-        "ltex",
-        -- from vscode-langservers-extracted
-        "cssls",
-        "eslint",
-        "html",
-        "jsonls",
-        "efm",
-    })
+    }
+
+    if os_name == 'Linux' then
+        vim.list_extend(basic_requirements, {
+            "ltex",
+            -- from vscode-langservers-extracted
+            "cssls",
+            "eslint",
+            "html",
+            "jsonls",
+            "efm",
+        })
+    end
+
+    lsp.ensure_installed(basic_requirements)
 
     require('lspconfig').gdscript.setup {
         debounce_text_changes = 150,
@@ -338,16 +346,19 @@ if PackerPluginLoaded("lsp-zero.nvim") then
         css = { prettier },
         markdown = { prettier },
     }
-    lsp.configure('efm', {
-        init_options = { documentFormatting = true },
-        settings = {
-            rootMarkers = { ".git/" },
-            lintDebounce = 100,
-            -- logLevel = 5,
-            languages = languages,
-        },
-        filetypes = vim.tbl_keys(languages),
-    })
+
+    if os_name == 'Linux' then
+        lsp.configure('efm', {
+            init_options = { documentFormatting = true },
+            settings = {
+                rootMarkers = { ".git/" },
+                lintDebounce = 100,
+                -- logLevel = 5,
+                languages = languages,
+            },
+            filetypes = vim.tbl_keys(languages),
+        })
+    end
 
     lsp.configure('pylsp', {
         settings = {
