@@ -220,3 +220,5 @@ Syncthing
 qBittorent
 PrivateBin
 Drawabox
+Drawbox
+undotree

@@ -266,6 +266,11 @@ _G.packer_plugins = {
     path = "/home/inom/.local/share/nvim/site/pack/packer/opt/nvim-treesitter-textobjects",
     url = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
   },
+  ["nvim-web-devicons"] = {
+    loaded = true,
+    path = "/home/inom/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
+    url = "https://github.com/nvim-tree/nvim-web-devicons"
+  },
   ["obsidian.nvim"] = {
     loaded = true,
     path = "/home/inom/.local/share/nvim/site/pack/packer/start/obsidian.nvim",
@@ -280,6 +285,13 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/inom/.local/share/nvim/site/pack/packer/start/packer.nvim",
     url = "https://github.com/wbthomason/packer.nvim"
+  },
+  ["papis.nvim"] = {
+    load_after = {},
+    loaded = true,
+    needs_bufread = false,
+    path = "/home/inom/.local/share/nvim/site/pack/packer/opt/papis.nvim",
+    url = "https://github.com/jghauser/papis.nvim"
   },
   ["peek.nvim"] = {
     loaded = true,
@@ -322,11 +334,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/inom/.local/share/nvim/site/pack/packer/start/telekasten.nvim",
     url = "https://github.com/renerocksai/telekasten.nvim"
-  },
-  ["telescope-bibtex.nvim"] = {
-    loaded = true,
-    path = "/home/inom/.local/share/nvim/site/pack/packer/start/telescope-bibtex.nvim",
-    url = "https://github.com/nvim-telescope/telescope-bibtex.nvim"
   },
   ["telescope-file-browser.nvim"] = {
     loaded = true,
@@ -418,8 +425,11 @@ try_loadstring("\27LJ\2\nC\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B
 time([[Config for trouble.nvim]], false)
 -- Load plugins in order defined by `after`
 time([[Sequenced loading]], true)
+vim.cmd [[ packadd telescope.nvim ]]
 vim.cmd [[ packadd nvim-treesitter ]]
 vim.cmd [[ packadd nvim-treesitter-textobjects ]]
+vim.cmd [[ packadd nvim-cmp ]]
+vim.cmd [[ packadd papis.nvim ]]
 time([[Sequenced loading]], false)
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]

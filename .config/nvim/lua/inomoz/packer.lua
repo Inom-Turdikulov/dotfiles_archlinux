@@ -23,7 +23,8 @@ return require('packer').startup(function(use)
     -- File browser
     use {
         "nvim-telescope/telescope-file-browser.nvim",
-        requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons" }
+        requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim",
+            "nvim-tree/nvim-web-devicons" }
     }
 
     -- A dark Vim/Neovim color scheme for the GUI and 16/256/true-color terminal
@@ -202,11 +203,16 @@ return require('packer').startup(function(use)
         use({ 'toppair/peek.nvim', run = 'deno task --quiet build:fast' })
 
         -- Bibtex integration
-        use { "nvim-telescope/telescope-bibtex.nvim",
+        use({
+            "jghauser/papis.nvim",
+            after = { "telescope.nvim", "nvim-cmp" },
             requires = {
-                { 'nvim-telescope/telescope.nvim' },
+                "kkharji/sqlite.lua",
+                "nvim-lua/plenary.nvim",
+                "MunifTanjim/nui.nvim",
+                "nvim-treesitter/nvim-treesitter",
             },
-        }
+        })
 
         -- Execute code blocks in markdown
         use { "michaelb/sniprun", run = "bash install.sh" }

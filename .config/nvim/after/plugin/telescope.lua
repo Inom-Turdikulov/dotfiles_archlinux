@@ -32,7 +32,7 @@ if PackerPluginLoaded("telescope.nvim") then
     vim.keymap.set('n', '<leader>fc', builtin.command_history,
     { desc = 'Command history' })
 
-    vim.keymap.set({ "n", "v", "i" }, '<C-S-p>', function()
+    vim.keymap.set({ "n", "v", "i" }, '<C-p>', function()
         if vim.fn.filereadable('.git/HEAD') == 1 then
             switch_to_first_window()
             builtin.git_files()
@@ -48,6 +48,10 @@ if PackerPluginLoaded("telescope.nvim") then
 
     require("telescope").setup {
         defaults = {
+            file_ignore_patterns = {
+                "./papis",
+                "./node_modules",
+            },
             -- preview = {
             --     mime_hook = function(filepath, bufnr, opts)
             --         local is_image = function(filepath)
