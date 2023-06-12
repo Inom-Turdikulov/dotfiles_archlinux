@@ -89,6 +89,6 @@ else
 fi
 
 START_DIR="$HOME/Projects/main/wiki/"
-if [[ -d $START_DIR ]]; then
+if [[ -d $START_DIR && $PWD == $HOME ]]; then
     cd $START_DIR
 fi
