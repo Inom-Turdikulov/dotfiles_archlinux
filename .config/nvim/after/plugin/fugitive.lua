@@ -8,6 +8,12 @@ if PackerPluginLoaded("vim-fugitive") then
         group = Inomoz_Fugitive,
         pattern = "*",
         callback = function()
+            if vim.bo.ft == "diff" then
+                -- TODO: need test it
+                vim.keymap.set("n", "gn", "<cmd>diffget //2<CR>") -- select left side of diff
+                vim.keymap.set("n", "gt", "<cmd>diffget //3<CR>") -- select right side of diff
+            end
+
             if vim.bo.ft ~= "fugitive" then
                 return
             end
@@ -29,25 +35,48 @@ if PackerPluginLoaded("vim-fugitive") then
         end,
     })
 
-    vim.keymap.set("n", "gn", "<cmd>diffget //2<CR>") -- select left side of diff
-    vim.keymap.set("n", "gt", "<cmd>diffget //3<CR>") -- select right side of diff
 
     -- fugitive git bindings
-    vim.keymap.set("n", "<space>gg", ":Git<CR>")
-    vim.keymap.set("n", "<space>gl", ":Gclog<CR>")
-    -- vim.keymap.set("n", "<space>ga",  ":Git add %:p<CR><CR>")
-    -- vim.keymap.set("n", "<space>gc",  ":Gcommit -v -q<CR>")
-    -- vim.keymap.set("n", "<space>gt",  ":Gcommit -v -q %:p<CR>")
-    -- vim.keymap.set("n", "<space>gd",  ":Gdiff<CR>")
-    -- vim.keymap.set("n", "<space>ge",  ":Gedit<CR>")
-    -- vim.keymap.set("n", "<space>gr",  ":Gread<CR>")
-    -- vim.keymap.set("n", "<space>gw",  ":Gwrite<CR><CR>")
-    -- vim.keymap.set("n", "<space>gl",  ":silent! Glog<CR>:bot copen<CR>")
-    -- vim.keymap.set("n", "<space>gp",  ":Ggrep<Space>")
-    -- vim.keymap.set("n", "<space>gm",  ":Gmove<Space>")
-    -- vim.keymap.set("n", "<space>gb",  ":Git branch<Space>")
-    -- vim.keymap.set("n", "<space>go",  ":Git checkout<Space>")
-    -- vim.keymap.set("n", "<space>gps", ":Dispatch! git push<CR>")
-    -- vim.keymap.set("n", "<space>gpl", ":Dispatch! git pull<CR>")
+    local function showFugitiveGit()
+        if vim.fn.FugitiveHead() ~= '' then
+            vim.cmd [[
+    Git
+    11wincmd_ " remove this if you will use vertical split
+
+    " wincmd H  " Open Git window in vertical split
+    " setlocal winfixwidth
+    " vertical resize 31
+    " setlocal winfixwidth
+    setlocal nonumber
+    setlocal norelativenumber
+    ]]
+        end
+    end
+    local function toggleFugitiveGit()
+        if vim.fn.buflisted(vim.fn.bufname('fugitive:///*/.git//$')) ~= 0 then
+            vim.cmd [[ execute ":bdelete" bufname('fugitive:///*/.git//$') ]]
+        else
+            showFugitiveGit()
+        end
+    end
+    vim.keymap.set('n', '<leader>gg', toggleFugitiveGit,
+        { desc = 'Toggle Git window', noremap = true })
+
+    vim.keymap.set("n", "<leader>gl", ":Gclog<CR>")
+    vim.keymap.set("n", "<leader>gb", ":Git branch<Space>")
+
+    vim.keymap.set("n", "<leader>gd", ":Gdiffsplit<CR>")
+    vim.keymap.set("n", "<leader>gD", ":Git diff<CR>")
+    vim.keymap.set("n", "<leader>ge", ":Gedit<CR>")
     --
+    -- capitalize W/R to reduce unwanted changes
+    vim.keymap.set("n", "<leader>gW", ":Gwrite<CR>")
+    vim.keymap.set("n", "<leader>gR", ":Gread<CR>")
+
+    vim.keymap.set("n", "<leader>ga", ":Git commit -v -q --amend<CR>")
+    vim.keymap.set("n", "<leader>gA", ":Git add -p<CR>") -- add with patch
+
+    vim.keymap.set("n", "<leader>gp", ":Ggrep<Space>")
+    vim.keymap.set("n", "<leader>gm", ":GMove<Space>")
+    vim.keymap.set("n", "<leader>go", ":Git checkout<Space>")
 end

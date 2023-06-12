@@ -4,6 +4,7 @@ if PackerPluginLoaded("harpoon") then
 
     vim.keymap.set("n", "<leader>a", mark.add_file,
         { desc = "Add file to harpoon" })
+
     vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu,
         { desc = "Toggle harpoon menu" })
 

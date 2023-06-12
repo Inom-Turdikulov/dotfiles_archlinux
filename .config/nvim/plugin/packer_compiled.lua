@@ -74,11 +74,6 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
-  ["ChatGPT.nvim"] = {
-    loaded = true,
-    path = "/home/inom/.local/share/nvim/site/pack/packer/start/ChatGPT.nvim",
-    url = "https://github.com/jackMort/ChatGPT.nvim"
-  },
   ["Comment.nvim"] = {
     loaded = true,
     path = "/home/inom/.local/share/nvim/site/pack/packer/start/Comment.nvim",
@@ -98,6 +93,16 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/inom/.local/share/nvim/site/pack/packer/start/Vim-Jinja2-Syntax",
     url = "https://github.com/Glench/Vim-Jinja2-Syntax"
+  },
+  ["auto-session"] = {
+    loaded = true,
+    path = "/home/inom/.local/share/nvim/site/pack/packer/start/auto-session",
+    url = "https://github.com/rmagatti/auto-session"
+  },
+  ["bullets.vim"] = {
+    loaded = true,
+    path = "/home/inom/.local/share/nvim/site/pack/packer/start/bullets.vim",
+    url = "https://github.com/dkarter/bullets.vim"
   },
   ["calendar-vim"] = {
     loaded = true,
@@ -134,10 +139,10 @@ _G.packer_plugins = {
     path = "/home/inom/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
-  ["copilot.vim"] = {
+  ["copilot.lua"] = {
     loaded = true,
-    path = "/home/inom/.local/share/nvim/site/pack/packer/start/copilot.vim",
-    url = "https://github.com/github/copilot.vim"
+    path = "/home/inom/.local/share/nvim/site/pack/packer/start/copilot.lua",
+    url = "https://github.com/zbirenbaum/copilot.lua"
   },
   ["editorconfig.nvim"] = {
     loaded = true,
@@ -159,15 +164,15 @@ _G.packer_plugins = {
     path = "/home/inom/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
     url = "https://github.com/lewis6991/gitsigns.nvim"
   },
+  ["grapple.nvim"] = {
+    loaded = true,
+    path = "/home/inom/.local/share/nvim/site/pack/packer/start/grapple.nvim",
+    url = "https://github.com/cbochs/grapple.nvim"
+  },
   harpoon = {
     loaded = true,
     path = "/home/inom/.local/share/nvim/site/pack/packer/start/harpoon",
     url = "https://github.com/ThePrimeagen/harpoon"
-  },
-  ["hologram.nvim"] = {
-    loaded = true,
-    path = "/home/inom/.local/share/nvim/site/pack/packer/start/hologram.nvim",
-    url = "https://github.com/edluffy/hologram.nvim"
   },
   ["lsp-zero.nvim"] = {
     loaded = true,
@@ -183,6 +188,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/inom/.local/share/nvim/site/pack/packer/start/magma-nvim",
     url = "https://github.com/dccsillag/magma-nvim"
+  },
+  ["markdowny.nvim"] = {
+    loaded = true,
+    path = "/home/inom/.local/share/nvim/site/pack/packer/start/markdowny.nvim",
+    url = "https://github.com/antonk52/markdowny.nvim"
   },
   ["mason-lspconfig.nvim"] = {
     loaded = true,
@@ -234,6 +244,11 @@ _G.packer_plugins = {
     path = "/home/inom/.local/share/nvim/site/pack/packer/start/nvim-dap-ui",
     url = "https://github.com/rcarriga/nvim-dap-ui"
   },
+  ["nvim-dap-virtual-text"] = {
+    loaded = true,
+    path = "/home/inom/.local/share/nvim/site/pack/packer/start/nvim-dap-virtual-text",
+    url = "https://github.com/theHamsta/nvim-dap-virtual-text"
+  },
   ["nvim-dap-vscode-js"] = {
     loaded = true,
     path = "/home/inom/.local/share/nvim/site/pack/packer/start/nvim-dap-vscode-js",
@@ -265,6 +280,11 @@ _G.packer_plugins = {
     needs_bufread = false,
     path = "/home/inom/.local/share/nvim/site/pack/packer/opt/nvim-treesitter-textobjects",
     url = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
+  },
+  ["nvim-ufo"] = {
+    loaded = true,
+    path = "/home/inom/.local/share/nvim/site/pack/packer/start/nvim-ufo",
+    url = "https://github.com/kevinhwang91/nvim-ufo"
   },
   ["nvim-web-devicons"] = {
     loaded = true,
@@ -308,10 +328,15 @@ _G.packer_plugins = {
     path = "/home/inom/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
-  ["popup.nvim"] = {
+  ["portal.nvim"] = {
     loaded = true,
-    path = "/home/inom/.local/share/nvim/site/pack/packer/start/popup.nvim",
-    url = "https://github.com/nvim-lua/popup.nvim"
+    path = "/home/inom/.local/share/nvim/site/pack/packer/start/portal.nvim",
+    url = "https://github.com/cbochs/portal.nvim"
+  },
+  ["promise-async"] = {
+    loaded = true,
+    path = "/home/inom/.local/share/nvim/site/pack/packer/start/promise-async",
+    url = "https://github.com/kevinhwang91/promise-async"
   },
   ropevim = {
     loaded = false,
@@ -335,20 +360,15 @@ _G.packer_plugins = {
     path = "/home/inom/.local/share/nvim/site/pack/packer/start/telekasten.nvim",
     url = "https://github.com/renerocksai/telekasten.nvim"
   },
+  ["telescope-dap.nvim"] = {
+    loaded = true,
+    path = "/home/inom/.local/share/nvim/site/pack/packer/start/telescope-dap.nvim",
+    url = "https://github.com/nvim-telescope/telescope-dap.nvim"
+  },
   ["telescope-file-browser.nvim"] = {
     loaded = true,
     path = "/home/inom/.local/share/nvim/site/pack/packer/start/telescope-file-browser.nvim",
     url = "https://github.com/nvim-telescope/telescope-file-browser.nvim"
-  },
-  ["telescope-frecency.nvim"] = {
-    loaded = true,
-    path = "/home/inom/.local/share/nvim/site/pack/packer/start/telescope-frecency.nvim",
-    url = "https://github.com/nvim-telescope/telescope-frecency.nvim"
-  },
-  ["telescope-media-files.nvim"] = {
-    loaded = true,
-    path = "/home/inom/.local/share/nvim/site/pack/packer/start/telescope-media-files.nvim",
-    url = "https://github.com/nvim-telescope/telescope-media-files.nvim"
   },
   ["telescope.nvim"] = {
     loaded = true,
@@ -366,7 +386,6 @@ _G.packer_plugins = {
     url = "https://github.com/uga-rosa/translate.nvim"
   },
   ["trouble.nvim"] = {
-    config = { "\27LJ\2\nC\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\nicons\1\nsetup\ftrouble\frequire\0" },
     loaded = true,
     path = "/home/inom/.local/share/nvim/site/pack/packer/start/trouble.nvim",
     url = "https://github.com/folke/trouble.nvim"
@@ -380,6 +399,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/inom/.local/share/nvim/site/pack/packer/start/vim-dadbod",
     url = "https://github.com/tpope/vim-dadbod"
+  },
+  ["vim-dadbod-completion"] = {
+    loaded = true,
+    path = "/home/inom/.local/share/nvim/site/pack/packer/start/vim-dadbod-completion",
+    url = "https://github.com/kristijanhusak/vim-dadbod-completion"
   },
   ["vim-dadbod-ui"] = {
     loaded = true,
@@ -419,16 +443,12 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: trouble.nvim
-time([[Config for trouble.nvim]], true)
-try_loadstring("\27LJ\2\nC\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\nicons\1\nsetup\ftrouble\frequire\0", "config", "trouble.nvim")
-time([[Config for trouble.nvim]], false)
 -- Load plugins in order defined by `after`
 time([[Sequenced loading]], true)
-vim.cmd [[ packadd telescope.nvim ]]
 vim.cmd [[ packadd nvim-treesitter ]]
 vim.cmd [[ packadd nvim-treesitter-textobjects ]]
 vim.cmd [[ packadd nvim-cmp ]]
+vim.cmd [[ packadd telescope.nvim ]]
 vim.cmd [[ packadd papis.nvim ]]
 time([[Sequenced loading]], false)
 vim.cmd [[augroup packer_load_aucmds]]

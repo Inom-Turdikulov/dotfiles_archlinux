@@ -21,6 +21,7 @@ vim.opt.incsearch = true
 vim.opt.termguicolors = true
 
 vim.opt.scrolloff = 8
+vim.opt.sidescrolloff=4
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 
@@ -33,7 +34,10 @@ vim.wo.list = true
 vim.wo.listchars = GLOBAL_LISTCHARS
 
 -- Custom highlighting in diff mode
--- vim.opt.diffopt:append { 'linematch:50' }
+vim.opt.diffopt:append { 'linematch:50' }
+
+-- Open diff in vertical split
+vim.opt.diffopt:append { 'vertical' }
 
 -- Enable syntax highlight in code blocks
 vim.g.markdown_fenced_languages = {
@@ -72,31 +76,21 @@ vim.opt.title = true
 vim.opt.titlestring = "%{expand('%:p:h:t')}"
 vim.g.markdown_folding = 1 -- enable markdown folding
 
+
 -- if windows set specific options, fix shell in msys2 (windows)
 if vim.fn.has('win32') == 1 then
     vim.opt.shellcmdflag = "-c"
 end
 
-vim.cmd([[
-" Auto save view files
-autocmd BufWrite * mkview
-autocmd BufRead * silent! loadview
-autocmd BufRead,BufNewFile *.md setlocal textwidth=80
-
-" Markdown folding
-au FileType markdown setlocal foldlevel=99 conceallevel=2
-]])
-
-
 vim.g.netrw_browse_split = 0
 vim.g.netrw_banner = 0
 vim.g.netrw_winsize = 25
-vim.cmd('source ~/.config/nvim/lua/inomoz/better_gx.vim')
 
--- Use pyenv for python if available
-if vim.fn.executable('pyenv') == 1 then
-    vim.g.python_host_prog = vim.fn.expand('~/.pyenv/shims/python')
-    vim.g.python3_host_prog = vim.fn.expand('~/.pyenv/shims/python3')
-end
+-- -- Use pyenv for python if available
+-- if vim.fn.executable('pyenv') == 1 then
+--     vim.g.python_host_prog = vim.fn.expand('~/.pyenv/shims/python')
+--     vim.g.python3_host_prog = vim.fn.expand('~/.pyenv/shims/python3')
+-- end
 
-
+-- Save data in session
+vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"

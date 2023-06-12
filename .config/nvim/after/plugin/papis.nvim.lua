@@ -10,7 +10,7 @@ if PackerPluginLoaded("papis.nvim") then
             notes_name = [[notes.md]],
         },
         -- Enable the default keymaps
-        enable_keymaps = true,
+        enable_keymaps = false,
         enable_modules = {
             ["search"] = true,         -- Enables/disables the search module
             ["completion"] = true,     -- Enables/disables the completion module
@@ -84,3 +84,9 @@ if PackerPluginLoaded("papis.nvim") then
     -- Start papis.nvim automatically, not when opening a file with specific name
     vim.cmd(":PapisStart")
 end
+
+vim.keymap.set("n", "<leader>pp", ":Telescope papis<cr>", {desc = "Papis"})
+vim.keymap.set("n", "<leader>po", ":PapisOpenFile<cr>", {desc = "Papis Open File"})
+vim.keymap.set("n", "<leader>pe", ":PapisEditEntry<cr>", {desc = "Papis Edit Entry"})
+vim.keymap.set("n", "<leader>pn", ":PapisOpenNote<cr>", {desc = "Papis Open Note"})
+vim.keymap.set("n", "<leader>pi", ":PapisShowPopup<cr>", {desc = "Papis Show Popup"})

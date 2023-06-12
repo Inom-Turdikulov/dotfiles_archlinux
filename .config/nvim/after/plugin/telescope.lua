@@ -2,12 +2,16 @@ if PackerPluginLoaded("telescope.nvim") then
     local builtin = require('telescope.builtin')
 
     local function switch_to_first_window()
-        -- local windows = vim.api.nvim_list_wins()
-        -- local num_windows = #windows
-        -- if num_windows >= 4 then
-        --     vim.api.nvim_set_current_win(windows[5])
-        -- end
+        local windows = vim.api.nvim_list_wins()
+        local num_windows = #windows
+        if num_windows > 1 then
+            vim.api.nvim_set_current_win(windows[1])
+        end
     end
+
+    vim.keymap.set("n", "<c-'>", function()
+        switch_to_first_window()
+    end, { noremap = true, silent = true }, { desc = 'Switch to first window' })
 
     -- find telescope builtins
     vim.keymap.set("n", "<leader>fF", function()
@@ -25,32 +29,41 @@ if PackerPluginLoaded("telescope.nvim") then
         builtin.grep_string({ search = '- [ ]' });
     end)
 
+    vim.keymap.set("n", "<M-e>", function()
+        builtin.oldfiles({ only_cwd = true })
+    end, { noremap = true, silent = true }, { desc = 'Telescope oldfiles' })
+
     vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = 'Keymaps' })
 
-    vim.keymap.set('n', '<leader>fa', builtin.commands, { desc = 'Commands' })
+    vim.keymap.set('n', '<leader>fK', builtin.commands, { desc = 'Commands' })
 
     vim.keymap.set('n', '<leader>fc', builtin.command_history,
-    { desc = 'Command history' })
+        { desc = 'Command history' })
 
-    vim.keymap.set({ "n", "v", "i" }, '<C-p>', function()
+    vim.keymap.set({ "n", "i", "v" }, '<M-p>', function()
         if vim.fn.filereadable('.git/HEAD') == 1 then
             switch_to_first_window()
             builtin.git_files()
         else
             builtin.find_files()
         end
-    end, {})
+    end, {desc='Telescope find files'})
 
-    vim.keymap.set('n', '<C-M-p>', function()
+    vim.keymap.set('n', '<M-P>', function()
+        switch_to_first_window()
+        builtin.resume()
+    end, {desc='Telescope resume'})
+
+    vim.keymap.set('n', '<M-b>', function()
         switch_to_first_window()
         builtin.buffers()
-    end, {})
+    end, {desc='Telescope buffers'})
 
     require("telescope").setup {
         defaults = {
             file_ignore_patterns = {
-                "./papis",
                 "./node_modules",
+                "papis/*.pdf",
             },
             -- preview = {
             --     mime_hook = function(filepath, bufnr, opts)
@@ -86,7 +99,7 @@ if PackerPluginLoaded("telescope.nvim") then
             file_browser = {
                 theme = "ivy",
                 -- disables netrw and use telescope-file-browser in its place
-                hijack_netrw = true,
+                hijack_netrw = false,
                 mappings = {
                     ["i"] = {
                         -- your custom insert mode mappings
@@ -99,22 +112,11 @@ if PackerPluginLoaded("telescope.nvim") then
         },
     }
 
-    if PackerPluginLoaded("telescope-frecency.nvim") then
-        vim.keymap.set("n", "<leader><leader>", function()
-            switch_to_first_window()
-            require "telescope".extensions.frecency.frecency()
-        end, { noremap = true, silent = true }, { desc = 'Frecency' })
-    end
-
-
     if PackerPluginLoaded("telescope-file-browser.nvim") then
         require("telescope").load_extension("file_browser")
-        vim.keymap.set("n", "<leader>pV", function()
-            require("telescope").extensions.file_browser.file_browser()
-        end, {})
 
         -- open file_browser with the path of the current buffer
-        vim.keymap.set("n", "<leader>pv", function()
+        vim.keymap.set("n", "<leader>pV", function()
             require("telescope").extensions.file_browser.file_browser({
                 path = vim.fn.expand("%:p:h"),
                 select_buffer = true,

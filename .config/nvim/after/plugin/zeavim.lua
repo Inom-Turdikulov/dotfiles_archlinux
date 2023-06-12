@@ -1,5 +1,6 @@
 if PackerPluginLoaded("zeavim.vim") then
-    vim.keymap.set("n", "<leader>zh", function()
-        vim.cmd "Zeavim"
-    end)
+    vim.cmd [[
+        nmap <leader>zh <Plug>Zeavim
+        vmap <leader>zh <Plug>ZVVisSelection
+    ]]
 end

@@ -44,6 +44,16 @@ return require('packer').startup(function(use)
         requires = { { 'nvim-lua/plenary.nvim' } }
     }
 
+    -- enchance locations lists
+    use {
+        "cbochs/portal.nvim",
+        -- Optional dependencies
+        requires = {
+            "cbochs/grapple.nvim",
+            "ThePrimeagen/harpoon"
+        },
+    }
+
     -- Tree sitter text objects
     use({
         "nvim-treesitter/nvim-treesitter-textobjects",
@@ -117,11 +127,14 @@ return require('packer').startup(function(use)
             -- Snippets
             { 'L3MON4D3/LuaSnip' },
             { 'rafamadriz/friendly-snippets' },
+
+            -- Fix ltex (lsp spell checker) issuse
+            { "barreiroleo/ltex-extra.nvim" }
         }
     }
 
     -- OpenAI Codex to suggest code and entire functions
-    use("github/copilot.vim")
+    use { "zbirenbaum/copilot.lua" }
 
     -- External documentation using zeal
     use("KabbAmine/zeavim.vim")
@@ -133,40 +146,16 @@ return require('packer').startup(function(use)
         -- Soft/hard wrap modes
         use { 'andrewferrier/wrapping.nvim' }
 
-        -- Frequency based sorting
-        use {
-            "nvim-telescope/telescope-frecency.nvim",
-            requires = { "kkharji/sqlite.lua" }
-        }
-
-        -- Image preview
-        use {
-            "nvim-telescope/telescope-media-files.nvim",
-            requires = { "nvim-telescope/telescope.nvim",
-                "nvim-lua/plenary.nvim", "nvim-lua/popup.nvim" }
-        }
+        -- -- Image preview
+        -- use {
+        --     "nvim-telescope/telescope-media-files.nvim",
+        --     requires = { "nvim-telescope/telescope.nvim",
+        --         "nvim-lua/plenary.nvim", "nvim-lua/popup.nvim" }
+        -- }
 
         -- Diagnostic
         use({
-            "folke/trouble.nvim",
-            config = function()
-                require("trouble").setup {
-                    icons = false,
-                    -- your configuration comes here
-                    -- or leave it empty to use the default settings
-                    -- refer to the configuration section below
-                }
-            end
-        })
-
-        -- OpenAI's GPT-3 language model
-        use({
-            "jackMort/ChatGPT.nvim",
-            requires = {
-                "MunifTanjim/nui.nvim",
-                "nvim-lua/plenary.nvim",
-                "nvim-telescope/telescope.nvim"
-            }
+            "folke/trouble.nvim"
         })
 
         -- Fun and useless animations
@@ -174,6 +163,8 @@ return require('packer').startup(function(use)
 
         -- Debugging
         use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
+        use { "theHamsta/nvim-dap-virtual-text" }
+        use { "nvim-telescope/telescope-dap.nvim" }
         use {
             'mfussenegger/nvim-dap-python',
             requires = { { 'mfussenegger/nvim-dap' } }
@@ -217,6 +208,14 @@ return require('packer').startup(function(use)
         -- Execute code blocks in markdown
         use { "michaelb/sniprun", run = "bash install.sh" }
 
+        -- Super formatter for markdown
+        use {
+            'antonk52/markdowny.nvim',
+        }
+
+        -- Bullet points for markdown
+        use 'dkarter/bullets.vim'
+
         -- Jupyter notebook integration
         use { 'dccsillag/magma-nvim', run = ':UpdateRemotePlugins' }
 
@@ -226,15 +225,10 @@ return require('packer').startup(function(use)
         -- Calendar
         use("mattn/calendar-vim")
 
-        -- Image viewer
-        use("edluffy/hologram.nvim")
-
-        -- Fix ltex (lsp spell checker) issuse
-        use { "barreiroleo/ltex-extra.nvim" }
-
-        -- interacting with databases
+        -- interacting with databases, sql client
         use { "tpope/vim-dadbod" }
         use { "kristijanhusak/vim-dadbod-ui" }
+        use { "kristijanhusak/vim-dadbod-completion" }
 
         -- Refactoring
         use({
@@ -244,5 +238,13 @@ return require('packer').startup(function(use)
 
         -- jinja2 support
         use { "Glench/Vim-Jinja2-Syntax" }
+
+        -- Code folding
+        use { 'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async' }
+
+        -- Session manager
+        use {
+            'rmagatti/auto-session'
+        }
     end
 end)

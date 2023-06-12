@@ -1,4 +1,5 @@
 vim.g.mapleader = " "
+vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
 -- Fix cyrillic Ctrl mappings
 vim.keymap.set("n", "<C-с>", "<C-d>")
@@ -8,7 +9,7 @@ vim.keymap.set("n", "<C-ш>", "<C-u>")
 vim.keymap.set("i", "<C-BS>", "<C-W>")
 
 vim.keymap.set("n", "<C-s>", "<cmd>w<CR>")
-vim.keymap.set({"i", "v"}, "<C-s>", "<Esc><cmd>w<CR>")
+vim.keymap.set({ "i", "v" }, "<C-s>", "<Esc><cmd>w<CR>")
 
 -- move lines
 vim.keymap.set("v", "<C-J>", ":m '>+1<CR>gv=gv")
@@ -39,10 +40,11 @@ vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
 -- Replace word under cursor -> send to command mode
-vim.keymap.set("n", "<leader>S", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+vim.keymap.set("n", "<leader>S",
+[[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
 -- Make current file executable
-vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
+vim.keymap.set("n", "<leader>X", "<cmd>!chmod +x %<CR>", { silent = true })
 
 -- Launch script using $TERMINAL
 vim.keymap.set("n", "<leader>o", "<cmd>!$TERMINAL %<CR>", { silent = true })
@@ -50,8 +52,17 @@ vim.keymap.set("n", "<leader>o", "<cmd>!$TERMINAL %<CR>", { silent = true })
 -- Open file in external program (xdg-open)
 vim.keymap.set("n", "<leader>O", "<cmd>!xdg-open %<CR>", { silent = true })
 
+local vim_config_dir = vim.fn.stdpath("config")
 -- Open packer config
-vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.config/nvim/lua/inomoz/packer.lua<CR>");
+vim.keymap.set("n", "<leader>vpp",
+"<cmd>e "..vim_config_dir.."/lua/inomoz/packer.lua<CR>");
+
+-- open Ex in nvim config directory
+vim.keymap.set("n", "<Leader>vpe", ":e " .. vim_config_dir .. "<CR>",
+{ desc = "Open Ex in nvim config directory" })
+
+vim.keymap.set("n", "<leader>vpr", "<cmd>lua ReloadConfig()<CR>",
+{ desc = "Reload nvim config" })
 
 -- Fun stuff
 vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>");
@@ -59,7 +70,8 @@ vim.keymap.set("n", "<leader>mR", "<cmd>CellularAutomaton game_of_life<CR>");
 
 -- External commands
 vim.keymap.set("n", "<Leader>ov", ': !$TERMINAL -e visidata "%"<CR>')
-vim.keymap.set("n", "<Leader>oc", ': silent !LDLIBS="-lcrypt -lcs50 -lm" clang "%" -o /tmp/a.out -lcs50 && kitty --hold -e /tmp/a.out<CR>')
+vim.keymap.set("n", "<Leader>oc",
+': silent !LDLIBS="-lcrypt -lcs50 -lm" clang "%" -o /tmp/a.out -lcs50 && kitty --hold -e /tmp/a.out<CR>')
 
 -- Quickly Destsroy current buffer
 vim.keymap.set("n", "<M-x>", "<cmd>bd<CR>")
@@ -75,7 +87,7 @@ vim.keymap.set("n", "<leader>vn", function()
 end)
 
 -- Switch keymap keymap=russian-jcukenwin or keymap=english
-vim.keymap.set({"n", "v", "i"}, "<C-l>", function()
+vim.keymap.set({ "n", "v", "i" }, "<C-l>", function()
     if vim.o.keymap == "russian-jcukenwin" then
         vim.o.keymap = ""
     else
@@ -84,7 +96,8 @@ vim.keymap.set({"n", "v", "i"}, "<C-l>", function()
 end)
 
 -- Delete current file
-vim.keymap.set("n", "<S-M-Del>", "<cmd>call delete(expand('%:p')) | bdelete! %<CR>")
+vim.keymap.set("n", "<S-M-Del>",
+"<cmd>call delete(expand('%:p')) | bdelete! %<CR>")
 
 -- search build.sh file in current directory and parent directories
 local function search_build_sh_recursively(path)
@@ -138,19 +151,21 @@ end)
 -- search word under cursor in goldendict
 vim.keymap.set("n", "<Leader>sd", function()
     local word = vim.fn.expand("<cword>")
-    vim.cmd("silent !goldendict \"" .. word .. "\"")
+    vim.cmd("silent !goldendict \"" .. word .. "\" &")
 end)
 
 -- search word under cursor in google images (browser)
 vim.keymap.set("n", "<Leader>sg", function()
     local word = vim.fn.expand("<cword>")
-    vim.cmd("silent !linkhandler \"https://www.google.com/search?q=" .. word .. "\"")
+    vim.cmd("silent !linkhandler \"https://www.google.com/search?q=" ..
+    word .. "\"")
 end)
 
 -- search word under cursor in google images (browser)
 vim.keymap.set("n", "<Leader>si", function()
     local word = vim.fn.expand("<cword>")
-    vim.cmd("silent !linkhandler \"https://www.google.com/search?q=" .. word .. "&tbm=isch\"")
+    vim.cmd("silent !linkhandler \"https://www.google.com/search?q=" ..
+    word .. "&tbm=isch\"")
 end)
 
 -- translate word under cursor
@@ -162,7 +177,8 @@ end)
 -- search word under cursor in devdocs-desktop
 vim.keymap.set("n", "<Leader>dd", function()
     word = vim.fn.expand("<cword>")
-    vim.api.nvim_command("!devdocs-desktop \"" .. vim.bo.filetype .. " " .. word .. "\"")
+    vim.api.nvim_command("!devdocs-desktop \"" ..
+    vim.bo.filetype .. " " .. word .. "\"")
 end)
 
 vim.keymap.set("n", "<Leader>dD", function()
@@ -196,3 +212,44 @@ end)
 vim.keymap.set("n", "<Leader>z%", function()
     vim.cmd("!cd %:p:h")
 end, { desc = "cd into current file path" })
+
+-- Insert new line below/upper current line
+vim.keymap.set("n", "]<space>", "moo<Esc>`o")
+vim.keymap.set("n", "[<space>", "moO<Esc>`o")
+
+-- run url_to_markdown_link.sh and then paste clipboard content
+vim.keymap.set("n", "<Leader>pl", function()
+    vim.cmd("silent !url_to_markdown_link.sh")
+    local status = vim.v.shell_error
+    if status == 0 then
+        -- paste clipboard content
+        vim.cmd("normal! \"+p")
+    else
+        print("url_to_markdown_link.sh failed")
+    end
+end, { desc = "Paste url as markdown link" })
+
+-- run html2markdown.sh and then paste clipboard content
+vim.keymap.set("n", "<Leader>ph", function()
+    vim.cmd("silent !html2markdown.sh")
+    local status = vim.v.shell_error
+    if status == 0 then
+        -- paste clipboard content
+        vim.cmd("normal! \"+p")
+    else
+        print("html2markdown.sh failed")
+    end
+end, { desc = "Paste html as markdown" })
+
+-- resize windows more quickly
+vim.keymap.set("n", "<Leader>=", function()
+    vim.cmd("exe \"resize \" . (winheight(0) * 3/2)")
+end, { desc = "Resize window to 3/2" })
+
+vim.keymap.set("n", "<Leader>-", function()
+    vim.cmd("exe \"resize \" . (winheight(0) * 2/3)")
+end, { desc = "Resize window to 2/3" })
+
+-- close all buffers except current one
+vim.keymap.set("n", "<Leader>bd", ":%bd|e#<cr>",
+{ desc = "Close all buffers except current" })
