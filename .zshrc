@@ -4,6 +4,7 @@ exists()
 }
 
 autoload -U colors && colors	# Load colors
+autoload -Uz compinit && compinit # Load autocomplete
 
 # Set GPG TTY
 # If gnupg2 and gpg-agent 2.x are used, be sure to set the environment variable GPG_TTY.
