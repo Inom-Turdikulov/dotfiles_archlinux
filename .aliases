@@ -16,6 +16,7 @@ alias translate='trans -shell -brief :ru+en'
 alias nvim="nvim --listen /tmp/nvimsocket"
 alias e="nvim --listen /tmp/nvimsocket"
 alias E="SUDO_EDITOR=nvim sudo -e"
+alias finger='pinky'
 
 # Python aliases
 alias py="python3"
