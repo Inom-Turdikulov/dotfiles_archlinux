@@ -219,7 +219,7 @@ stopwatch() {
 }
 
 # Initialize file at give path (better touch)
-t() { mkdir -pv "$(dirname "$1")" && touch "$1" ; }
+t() { mkdir -pv "$(dirname "$1")" && touch "$1"; $EDITOR "$1"; }
 
 em() { emacsclient -n -c -a emacs "$@" ; }
 ediff() { emacsclient -nw --eval "(ediff-files \"$1\" \"$2\")" ; }
