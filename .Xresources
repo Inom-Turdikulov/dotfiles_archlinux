@@ -5,7 +5,7 @@ Xft.rgba:       rgb
 Xft.hintstyle:  hintslight
 ! Use a truetype font and size.
 xterm*faceName: Monospace
-xterm*faceSize: 15
+xterm*faceSize: 18
 
 Xcursor.theme:  Breeze Light
 cursor.size:    32
