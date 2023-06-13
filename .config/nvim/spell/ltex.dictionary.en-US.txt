@@ -260,3 +260,7 @@ xdg-open
 vimdiff
 zeavim
 telescope-dap
+vim-dadbod-ui
+zooma
+ligthsail
+lightsail
