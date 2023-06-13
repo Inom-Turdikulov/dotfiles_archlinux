@@ -1,5 +1,6 @@
 vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+vim.keymap.set("n", "<leader>pV", ":Lexplore %:p:h<CR>")
 
 -- Fix cyrillic Ctrl mappings
 vim.keymap.set("n", "<C-с>", "<C-d>")
@@ -250,6 +251,8 @@ vim.keymap.set("n", "<Leader>-", function()
     vim.cmd("exe \"resize \" . (winheight(0) * 2/3)")
 end, { desc = "Resize window to 2/3" })
 
+vim.keymap.set("n", "<Leader>bd", ":bd<cr>", { desc = "Delete current buffer" })
+
 -- close all buffers except current one
-vim.keymap.set("n", "<Leader>bd", ":%bd|e#<cr>",
+vim.keymap.set("n", "<Leader>bD", ":%bd|e#<cr>",
 { desc = "Close all buffers except current" })

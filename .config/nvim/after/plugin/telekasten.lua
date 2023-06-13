@@ -68,7 +68,16 @@ map("<leader>zy", telekasten.yank_notelink, "yank notelink")
 
 map("<leader>zc", telekasten.show_calendar, "show calendar")
 
-map("<leader>zt", telekasten.toggle_todo, "toggle TODO")
+vim.keymap.set("n", "<leader>zt", function ()
+   telekasten.toggle_todo({onlyTodo=true})
+end, { silent = true, desc = "[Telekasten] toggle TODO (only TODO)" })
+vim.keymap.set("v", "<leader>zt", function ()
+   telekasten.toggle_todo({onlyTodo=true, v=true})
+end, { silent = true, desc = "[Telekasten] toggle TODO (only TODO)" })
+map("<leader>zT", telekasten.toggle_todo, "toggle TODO")
+vim.keymap.set("v", "<leader>zT", function ()
+   telekasten.toggle_todo({v=true})
+end, { silent = true, desc = "[Telekasten] toggle TODO" })
 
 map("<leader>zb", telekasten.show_backlinks, "show backlinks")
 

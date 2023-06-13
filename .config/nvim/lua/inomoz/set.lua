@@ -82,8 +82,8 @@ if vim.fn.has('win32') == 1 then
     vim.opt.shellcmdflag = "-c"
 end
 
+vim.g.nerw_keepdir = 0 --  avoid the move files error.
 vim.g.netrw_browse_split = 0
-vim.g.netrw_banner = 0
 vim.g.netrw_winsize = 25
 
 -- -- Use pyenv for python if available

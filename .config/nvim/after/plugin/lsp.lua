@@ -41,6 +41,14 @@ if PackerPluginLoaded("lsp-zero.nvim") then
     --     }
     -- })
 
+    require("lspconfig").ltex.setup {
+        settings = {
+            ltex = {
+                filetypes = { "bib", "gitcommit", "markdown" }
+            },
+            single_file_support = true
+        }
+    }
 
     -- configure lua language server for neovim
     -- see :help lsp-zero.nvim_workspace()
@@ -296,7 +304,7 @@ if PackerPluginLoaded("lsp-zero.nvim") then
             require("ltex_extra").setup {
                 load_langs = { "ru-RU", "en-US" }, -- table <string> : languages for witch dictionaries will be loaded
                 init_check = true,                 -- boolean : whether to load dictionaries on startup
-                path = "~/.config/nvim/spell",     -- string : path to store dictionaries. Relative path uses current working directory
+                path = vim.fn.expand("~/.config/nvim/spell"),     -- string : path to store dictionaries. Relative path uses current working directory
                 log_level = "none",                -- string : "none", "trace", "debug", "info", "warn", "error", "fatal"
             }
         end
