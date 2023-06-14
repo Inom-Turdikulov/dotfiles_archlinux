@@ -57,7 +57,8 @@ if PackerPluginLoaded("todo-comments.nvim") then
             local new_line = string.gsub(current_line, todo_text, "")
             vim.api.nvim_set_current_line(new_line)
         else
-            local to_remove_items = { "TODO: ", "NEXT: ", "NOTE: ", "FIXME: ", "WARN: ", "DONE: ", "INFO: ", "PERF: ", "KILL: ", "HACK: " }
+            local to_remove_items = { "TODO: ", "NEXT: ", "NOTE: ", "FIXME: ",
+                "WARN: ", "DONE: ", "INFO: ", "PERF: ", "KILL: ", "HACK: " }
             for _, item in ipairs(to_remove_items) do
                 local item_index = string.find(current_line, item)
                 if (item_index ~= nil) then
@@ -68,40 +69,52 @@ if PackerPluginLoaded("todo-comments.nvim") then
             end
 
             local last_leading_space = string.find(current_line, "%S")
-            local leading_dash = string.find(current_line, "-")
+            local leading_dash = string.find(current_line, "^-")
             if (leading_dash ~= nil) then
                 last_leading_space = leading_dash + 2
             end
 
-            current_line = string.sub(current_line, 0, last_leading_space - 1) .. todo_text .. string.sub(current_line, last_leading_space)
+            current_line = string.sub(current_line, 0, last_leading_space - 1) ..
+            todo_text .. string.sub(current_line, last_leading_space)
             vim.api.nvim_set_current_line(current_line)
         end
     end
 
     vim.keymap.set("n", "<leader>tt", toggle_todo, { desc = "Toggle TODO" })
 
-    vim.keymap.set("n", "<leader>tn", function ()
+    vim.keymap.set("n", "<leader>tn", function()
         toggle_todo("NEXT: ")
     end, { desc = "Toggle NEXT" })
-    vim.keymap.set("n", "<leader>tN", function ()
+
+    vim.keymap.set("n", "<leader>tN", function()
         toggle_todo("NOTE: ")
     end, { desc = "Toggle NOTE" })
-    vim.keymap.set("n", "<leader>tf", function ()
+
+    vim.keymap.set("n", "<leader>tf", function()
         toggle_todo("FIXME: ")
     end, { desc = "Toggle FIXME" })
-    vim.keymap.set("n", "<leader>tw", function ()
+
+    vim.keymap.set("n", "<leader>tw", function()
         toggle_todo("WARN: ")
     end, { desc = "Toggle WARN" })
-    vim.keymap.set("n", "<leader>tk", function ()
+
+    vim.keymap.set("n", "<leader>td", function()
         toggle_todo("DONE: ")
     end, { desc = "Toggle DONE" })
-    vim.keymap.set("n", "<leader>ti", function ()
+
+    vim.keymap.set("n", "<leader>tk", function()
+        toggle_todo("KILL: ")
+    end, { desc = "Toggle DONE" })
+
+    vim.keymap.set("n", "<leader>ti", function()
         toggle_todo("INFO: ")
     end, { desc = "Toggle INFO" })
-    vim.keymap.set("n", "<leader>tp", function ()
+
+    vim.keymap.set("n", "<leader>tp", function()
         toggle_todo("PERF: ")
     end, { desc = "Toggle PERF" })
-    vim.keymap.set("n", "<leader>th", function ()
+
+    vim.keymap.set("n", "<leader>th", function()
         toggle_todo("HACK: ")
     end, { desc = "Toggle HACK" })
 end
