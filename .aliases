@@ -1,28 +1,5 @@
 #!/usr/bin/env bash
 
-# Fool protection
-# Do not do chown/chroot for root directory
-alias chown="chown --preserve-root"
-alias chmod="chmod --preserve-root"
-
-# Utilites
-alias cp="cp -i"                          # confirm before overwriting something
-alias df='df -h'                          # human-readable sizes
-alias free='free -m'                      # show sizes in MB
-alias git_submodlues='git submodule update --init --recursive --remote'
-alias less="less -FX"
-alias mux='tmux new -As0'
-alias translate='trans -shell -brief :ru+en'
-alias nvim="nvim --listen /tmp/nvimsocket"
-alias e="nvim --listen /tmp/nvimsocket"
-alias E="SUDO_EDITOR=nvim sudo -e"
-alias finger='pinky'
-
-# Python aliases
-alias py="python3"
-alias py2="python2"
-alias unittest="python3 -m unittest"
-
 # Easier navigation: .., ..., ...., ....., ~ and -
 alias ..="cd .."
 alias ...="cd ../.."
@@ -35,10 +12,19 @@ alias doc="cd ~/Documents"
 alias dwn="cd ~/Downloads"
 alias des="cd ~/Desktop"
 alias prj="cd ~/Projects"
-alias g='git'
-alias gc="git checkout"
-alias gp="git push"
 
+# Programs remap
+# ===============
+alias cp="cp -i"                          # confirm before overwriting something
+alias df='df -h'                          # human-readable sizes
+alias free='free -m'                      # show sizes in MB
+alias less="less -FX"
+alias nvim="nvim --listen /tmp/nvimsocket"
+alias info='info --vi-keys' # Info vi mode
+alias watch='watch --color' # Color using watch
+alias pikaur='pikaur -Sy && pikaur' # Update database and then run pikaur
+alias chown="chown --preserve-root" # Do not do chown for root directory
+alias chmod="chmod --preserve-root"
 
 # Always enable colored `grep` output
 # Note: `GREP_OPTIONS="--color=auto"` is deprecated, hence the alias usage.
@@ -46,141 +32,114 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
-# IP addresses
-alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
-alias mylocalip="ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'"
-alias myips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
+# Programs shorthands
+# ===================
+alias l="ls -lF" # List all files colorized in long format
+alias la="ls -lAF" # List all files colorized in long format, excluding . and ..
+alias c="xclip -selection clipboard"     # Pipe to clipboard
+alias C="tr -d '\n' | xclip -selection clipboard" # without newlines
+alias mux='tmux new -As0'
+alias translate='trans -shell -brief :ru+en'
+alias e="nvim --listen /tmp/nvimsocket"
+alias E="SUDO_EDITOR=nvim sudo -e"
+alias finger='pinky'
+alias py="python3"
+alias py2="python2"
+alias unittest="python3 -m unittest"
+# Get Software Updates, can be extended
+alias pip_clear='pip cache purge'
+alias pip_search='pip list | tail -n +3 | cut -d" " -f1 | xargs pip show -f | grep'
+alias icat="kitty +kitten icat" # Display images in the terminal
+alias d="kitty +kitten diff" # Diff usikg kitty diff
 
-# Show active network interfaces
-alias ifactive="ifconfig -a"
-
-# Flush Directory Service cache
-alias flush="systemctl restart systemd-resolved"
+# Git
+alias g='git'
+alias gc="git checkout"
+alias gp="git push"
+alias git_submodlues='git submodule update --init --recursive --remote'
 
 # Canonical hex dump; some systems have this symlinked
 command -v hd > /dev/null || alias hd="hexdump -C"
 
-# Trim new lines and copy to clipboard
-alias c="tr -d '\n' | xclip -selection clipboard"
+# Network
+# =======
+alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias myip_backup="curl -s https://checkip.amazonaws.com"
+alias mylocalip="ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'"
+alias myips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
+alias ifactive="ifconfig -a" # Show active network interfaces
+alias flush="sudo systemctl restart systemd-resolved" # Flush Directory Service cache
+# URL-encode strings, usage: `urlencode "http://www.google.com/?q=Shell Script"`
+alias urlencode='python3 -c "import sys, urllib.parse as ul; print (ul.quote_plus(sys.argv[1]))"'
+# Simplest http client using curl
+for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
+    alias "$method"="curl -X$method"
+done
+alias get="curl -O --retry 999 --retry-max-time 0 -C -" # Download files
+alias get_warc='wget --delete-after --no-directories --warc-file=epfl --recursive --level=1'
+# Download images from current page using wget
+# -nd no create directories, -P prefix, -A accept, -r recursive, -l depth
+alias get_images='wget -nd -r -l 1 -P . -A jpeg,jpg,bmp,gif,png'
 
-# URL-encode strings
-alias urlencode='python -c "import sys, urllib.parse; print(urllib.parse.quote_plus(sys.argv[1]));"'
-
-# Merge PDF files, preserving hyperlinks
-# Usage: `mergepdf input{1,2,3}.pdf`
-alias mergepdf='gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=_merged.pdf'
 
 # Intuitive map function
 # For example, to list all directories that contain a certain file:
 # find . -name .gitattributes | map dirname
 alias map="xargs -n1"
 
-# One of @janmoesen’s ProTip™s, HTTP-client
-# For example, get IP address:
-# GET http://httpbin.org/ip
-for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
-	alias "${method}"="lwp-request -m '${method}'"
-done
+# IRL
+# =====
+alias weather='curl -s "wttr.in/$(pass location)"'
 
-# Kill all the tabs in Chrome to free up memory
-# [C] explained: http://www.commandlinefu.com/commands/view/402/exclude-grep-from-your-grepped-output-of-ps-alias-included-in-description
-alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"
 
-# Print each PATH entry on a separate line
-alias path='echo -e ${PATH//:/\\n}'
-
-# List all files colorized in long format
-alias l="ls -lF"
-
-# List all files colorized in long format, excluding . and ..
-alias la="ls -lAF"
-
-# Info vi mode
-alias info='info --vi-keys'
-alias meminfo='cat /proc/meminfo'
-alias cpuinfo='cat /proc/cpuinfo'
+# Operation system
+# =================
+alias xprop_hold='$TERMINAL --hold -e xprop' # get window info
 alias packages_list='expac "%n %m" -l'\n' -Q $(pacman -Qq) | sort -rhk 2 | less'
-
-# Get Software Updates, can be extended
-alias pip_clear='pip cache purge'
-alias pip_search='pip list | tail -n +3 | cut -d" " -f1 | xargs pip show -f | grep'
-
-# Color using watch
-alias watch='watch --color'
 alias fonts_mono='fc-list :spacing=mono family style | sort'
 alias fonts_all='fc-list | sort'
-alias autorandr_save="autorandr --force --save default"
-alias latest_file='/usr/bin/ls -t | head -n1'
+alias lastboot_log='journalctl -b -1 -n' # inspect previous boot
+# Connect to win10 machine
+alias vmconnect='virsh --connect qemu:///system start win10 & virt-viewer -c qemu:///system --attach -f win10'
 
+
+# Hardware
+# =========
+# Grep data from temp sensors
+alias systemperatures='sudo hddtemp /dev/disk/by-id/*ata*part1; sudo sensors'
+alias cpuinfo='cat /proc/cpuinfo'
+alias meminfo='cat /proc/meminfo'
+alias mem='smem -ktP ' # Get process total memory usage, with shared memory divided proportionally
+alias autorandr_save="autorandr --force --save default" # Save monitor configuration
+
+
+# Work with files
+# ======
+# Print each PATH entry on a separate line
+alias path='echo -e ${PATH//:/\\n}'
+alias latest_file='/usr/bin/ls -tap | grep -v / | head -n1'
+alias latest_dir='/usr/bin/ls -tad */ | head -n1'
+alias fzf_history='cat ~/.cache/ytfzf/watch_hist | jq  ".[].title,.[].url"|tail -n 20'
+
+# Mount and unmount Kindle
 alias koreader_mount='sshfs -o ssh_command="ssh -p 2222" root@koreader:/mnt/us/documents ~/public/koreader/'
 alias koreader_umount='umount ~/public/koreader'
 
-alias fzf_history='cat ~/.cache/ytfzf/watch_hist | jq  ".[].title,.[].url"|tail -n 20'
-alias weather='curl -s "wttr.in/$(pass location)"'
+# Merge PDF files, preserving hyperlinks
+# Usage: `mergepdf input{1,2,3}.pdf`
+alias mergepdf='gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=_merged.pdf'
 
-# Check my public IP address
-alias myip="curl -s https://checkip.amazonaws.com"
-
-# Grep data from temp sensors
-alias systemperatures='sudo hddtemp /dev/disk/by-id/*ata*part1; sudo sensors'
-
-# Download files
-alias get="curl -O --retry 999 --retry-max-time 0 -C -"
-
-# Slideshow using mvi, 5 seconds
-alias slideshow="mvi --image-display-duration=5 --loop-file=no"
-
-# Convert djvu with ocr to pdf
-alias djvu2pdf='docker run --rm -u $(id -u):$(id -g) -v $(pwd):/opt/work ilyabystrov/djvu2pdf'
-
-# Rename all files
+# Rename all files with numbers
 alias rename_all_numbers='ls -v | cat -n | while read n f; do mv -n "$f" "$n.ext"; done'
-
-# Taskwarrior
-alias in='task add +in'
-
-# Think alias useful when you want decide what do with task later
-# remember, when using think, you should enter a simple yes/no question.
-alias think='tick +1d'
-
-# Get total memory usage
-alias mem='smem -ktP '
-
-# download page into warc-file
-alias wget_warc='wget --delete-after --no-directories --warc-file=epfl --recursive --level=1'
-
-# get window info
-alias xprop_hold='$TERMINAL --hold -e xprop'
-
-alias fix_concated_mp3='mp3val -f -nb'
 
 # Merge, split or and manipulate audiobook files with chapters
 alias m4b-tool-merge='docker run -it --rm -u $(id -u):$(id -g) -v "$(pwd)":/mnt sandreas/m4b-tool:latest merge -v --jobs=6 --output-file="output/" --batch-pattern="input/%g/%a/%n/" "input/"'
 
 # Ripgrep over epub files
-alias rga-epub='rga --rga-adapters=pandoc'
+alias rga_epub='rga --rga-adapters=pandoc'
 
-# Inspect previous boot
-alias lastboot='journalctl -b -1 -n'
 
-# Connect to win10 machine
-alias vmconnect='virsh --connect qemu:///system start win10 & virt-viewer -c qemu:///system --attach -f win10'
-
-# Display images in the terminal
-alias icat="kitty +kitten icat"
-
-# Diff usikg kitty diff
-alias d="kitty +kitten diff"
-
-# Download images from current page using wget
-# -nd no create directories, -P prefix, -A accept, -r recursive, -l depth
-alias wget_images='wget -nd -r -l 1 -P . -A jpeg,jpg,bmp,gif,png'
-
+# Interactive helpers
+# ====================
 # Howdoi - stackoverflow from the terminal
 alias h='function hdi(){ howdoi $* -c -n 3|sed 's/================================================================================/=================================/g'|bat -p; }; hdi'
-
-# Update database and then run pikaur
-alias pikaur='pikaur -Sy && pikaur'
-
-# To get a list of the files you have selected in nnn one could create
-alias ncp="cat ${NNN_SEL:-${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.selection} | tr '\0' '\n'"
